@@ -118,15 +118,28 @@ const addSpec = (): void => {
 };
 
 const saveProduct = async (): Promise<void> => {
-  const data = {
-    name: productForm.value.name,
-    description: productForm.value.description,
+  // Валидация
+  if (!productForm.value.name.trim()) {
+    toast.error('Укажите название товара');
+    return;
+  }
+  if (productForm.value.price <= 0) {
+    toast.error('Цена должна быть больше 0');
+    return;
+  }
+  if (!productForm.value.images[0]?.trim()) {
+    toast.error('Укажите URL изображения');
+    return;
+  }
+
+  // Строим объект данных, исключая undefined значения
+  const data: Record<string, any> = {
+    name: productForm.value.name.trim(),
+    description: productForm.value.description.trim(),
     category: productForm.value.category,
-    subcategory: productForm.value.subcategory || undefined,
     price: productForm.value.price,
-    discountPrice: productForm.value.discountPrice || undefined,
-    stock: productForm.value.stock,
-    sku: productForm.value.sku,
+    stock: Math.max(0, productForm.value.stock),
+    sku: productForm.value.sku.trim(),
     tags: productForm.value.tags.split(',').map((t) => t.trim()).filter(Boolean),
     featured: productForm.value.featured,
     images: productForm.value.images.filter(Boolean),
@@ -135,17 +148,36 @@ const saveProduct = async (): Promise<void> => {
     reviews: editingProduct.value?.reviews ?? 0,
   };
 
+  // Добавляем опциональные поля только если они имеют значение
+  if (productForm.value.subcategory?.trim()) {
+    data.subcategory = productForm.value.subcategory.trim();
+  }
+  if (productForm.value.discountPrice && productForm.value.discountPrice > 0) {
+    data.discountPrice = productForm.value.discountPrice;
+  }
+
   try {
     if (editingProduct.value) {
       await updateProduct(editingProduct.value.id, data);
-      toast.success('Товар обновлён');
+      toast.success('✅ Товар обновлён');
     } else {
       await createProduct(data);
-      toast.success('Товар добавлен');
+      toast.success('✅ Товар добавлен');
     }
     resetProductForm();
     products.value = (await getProducts({}, 50)).products;
-  } catch { toast.error('Ошибка сохранения'); }
+  } catch (error: unknown) {
+    console.error('Product save error:', error);
+    const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
+    
+    if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
+      toast.error('❌ Нет прав доступа. Проверьте что вы администратор.');
+    } else if (message.includes('invalid-argument') || message.includes('invalid data')) {
+      toast.error('❌ Некорректные данные. Проверьте форму.');
+    } else {
+      toast.error(`❌ Ошибка: ${message}`);
+    }
+  }
 };
 
 const removeProduct = async (id: string): Promise<void> => {

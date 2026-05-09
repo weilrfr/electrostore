@@ -34,17 +34,44 @@ const hasDiscount = computed(() => !!product.value?.discountPrice);
 
 onMounted(async () => {
   const id = route.params.id as string;
+  if (!id) {
+    router.push('/404');
+    return;
+  }
+  
   try {
     const [prod, revs] = await Promise.all([
       getProductById(id),
       getProductReviews(id),
     ]);
-    if (!prod) { router.push('/404'); return; }
+    
+    if (!prod) {
+      console.warn(`Product not found with ID: ${id}`);
+      router.push('/404');
+      return;
+    }
+    
     product.value = prod;
     reviews.value = revs;
-    relatedProducts.value = await getRelatedProducts(id, prod.category, 4);
-  } catch {
-    toast.error('Ошибка загрузки товара');
+    
+    try {
+      relatedProducts.value = await getRelatedProducts(id, prod.category, 4);
+    } catch (e) {
+      console.warn('Could not load related products:', e);
+      // Не критичная ошибка, продолжаем
+    }
+  } catch (error: unknown) {
+    console.error('Product page error:', error);
+    const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
+    
+    if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
+      toast.error('❌ Нет доступа к товару');
+    } else {
+      toast.error(`❌ Ошибка загрузки: ${message}`);
+    }
+    
+    // После задержки редирект на главную
+    setTimeout(() => router.push('/'), 2000);
   } finally {
     loading.value = false;
   }

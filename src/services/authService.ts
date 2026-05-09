@@ -31,7 +31,6 @@ export interface RegisterData {
 }
 
 export const registerWithEmail = async (data: RegisterData): Promise<FirebaseUser> => {
-  console.log("Данные для регистрации:", data.email, data.password);
   const credential = await createUserWithEmailAndPassword(auth, data.email, data.password);
   const { user } = credential;
 

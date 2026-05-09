@@ -91,7 +91,10 @@ const removeAddress = async (address: Address): Promise<void> => {
 };
 
 const requestTopup = async (): Promise<void> => {
-  if (!user.value || topupAmount.value < 100) return;
+  if (!user.value || topupAmount.value < 100) {
+    toast.error('Проверьте данные (минимум 100 ₸)');
+    return;
+  }
   requestingTopup.value = true;
   try {
     await createTopupRequest(
@@ -102,8 +105,18 @@ const requestTopup = async (): Promise<void> => {
     );
     toast.success('Заявка на пополнение отправлена администратору');
     topupAmount.value = 5000;
-  } catch { toast.error('Ошибка отправки заявки'); }
-  finally { requestingTopup.value = false; }
+  } catch (error: unknown) {
+    console.error('Topup request error:', error);
+    const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
+    
+    if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
+      toast.error('❌ Ошибка доступа. Проверьте Firestore правила или переподключитесь.');
+    } else {
+      toast.error(`Ошибка: ${message}`);
+    }
+  } finally {
+    requestingTopup.value = false;
+  }
 };
 
 const txTypeIcon = (type: string): string => {

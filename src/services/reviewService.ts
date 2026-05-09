@@ -17,13 +17,19 @@ import type { Review } from '@/types';
 const reviewsRef = collection(db, 'reviews');
 
 export const getProductReviews = async (productId: string): Promise<Review[]> => {
-  const q = query(
-    reviewsRef,
-    where('productId', '==', productId),
-    orderBy('createdAt', 'desc'),
-  );
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Review));
+  try {
+    const q = query(
+      reviewsRef,
+      where('productId', '==', productId),
+      orderBy('createdAt', 'desc'),
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Review));
+  } catch (error) {
+    console.error(`Error loading reviews for product ${productId}:`, error);
+    // Возвращаем пустой массив если ошибка (отзывы не критичны)
+    return [];
+  }
 };
 
 export const addReview = async (

@@ -88,9 +88,17 @@ export const getProducts = async (
 // ─── Получение товара по ID ───────────────────────────────────────────────────
 
 export const getProductById = async (id: string): Promise<Product | null> => {
-  const snap = await getDoc(doc(db, 'products', id));
-  if (!snap.exists()) return null;
-  return { id: snap.id, ...snap.data() } as Product;
+  try {
+    const snap = await getDoc(doc(db, 'products', id));
+    if (!snap.exists()) {
+      console.warn(`Product document not found: ${id}`);
+      return null;
+    }
+    return { id: snap.id, ...snap.data() } as Product;
+  } catch (error) {
+    console.error(`Error loading product ${id}:`, error);
+    throw error;
+  }
 };
 
 // ─── Рекомендованные товары ───────────────────────────────────────────────────
@@ -133,8 +141,13 @@ export const getCategories = async (): Promise<Category[]> => {
 export const createProduct = async (
   data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>,
 ): Promise<string> => {
+  // Удаляем все undefined значения перед отправкой в Firestore
+  const cleanData = Object.fromEntries(
+    Object.entries(data).filter(([_, value]) => value !== undefined),
+  );
+
   const ref = await addDoc(productsRef, {
-    ...data,
+    ...cleanData,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
@@ -145,7 +158,12 @@ export const updateProduct = async (
   id: string,
   data: Partial<Omit<Product, 'id' | 'createdAt'>>,
 ): Promise<void> => {
-  await updateDoc(doc(db, 'products', id), { ...data, updatedAt: serverTimestamp() });
+  // Удаляем все undefined значения перед отправкой в Firestore
+  const cleanData = Object.fromEntries(
+    Object.entries(data).filter(([_, value]) => value !== undefined),
+  );
+
+  await updateDoc(doc(db, 'products', id), { ...cleanData, updatedAt: serverTimestamp() });
 };
 
 export const deleteProduct = async (id: string): Promise<void> => {
