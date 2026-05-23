@@ -4,15 +4,14 @@ import { useCartStore } from '@/stores/cartStore';
 import { useAuthStore } from '@/stores/authStore';
 import CartItem from '@/components/cart/CartItem.vue';
 import { formatPrice } from '@/utils';
-import { TAX_RATE, SHIPPING_COST } from '@/utils';
+import { SHIPPING_COST } from '@/utils';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 
 const subtotal = computed(() => cartStore.subtotal);
-const tax = computed(() => Math.round(subtotal.value * TAX_RATE));
 const shipping = computed(() => (subtotal.value > 0 ? SHIPPING_COST : 0));
-const total = computed(() => subtotal.value + tax.value + shipping.value);
+const total = computed(() => subtotal.value + shipping.value);
 </script>
 
 <template>
@@ -62,10 +61,6 @@ const total = computed(() => subtotal.value + tax.value + shipping.value);
             <div class="flex justify-between">
               <span class="text-gray-500">Доставка</span>
               <span class="text-green-600">Бесплатно</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-500">НДС (12%)</span>
-              <span>{{ formatPrice(tax) }}</span>
             </div>
             <div class="border-t border-gray-100 pt-3 flex justify-between font-semibold text-base">
               <span>Итого</span>

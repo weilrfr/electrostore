@@ -6,7 +6,7 @@ import { useCartStore } from '@/stores/cartStore';
 import { useAuthStore } from '@/stores/authStore';
 import { createOrder } from '@/services/orderService';
 import type { Address } from '@/types';
-import { formatPrice, TAX_RATE } from '@/utils';
+import { formatPrice } from '@/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = useRouter();
@@ -15,14 +15,12 @@ const authStore = useAuthStore();
 
 const user = computed(() => authStore.currentUser);
 const subtotal = computed(() => cartStore.subtotal);
-const tax = computed(() => Math.round(subtotal.value * TAX_RATE));
-const total = computed(() => subtotal.value + tax.value);
+const total = computed(() => subtotal.value);
 
 const loading = ref(false);
 const selectedAddressId = ref<string>('');
 const useNewAddress = ref(false);
 
-// Форма нового адреса
 const newAddress = ref<Omit<Address, 'id' | 'isDefault'>>({
   firstName: user.value?.firstName ?? '',
   lastName: user.value?.lastName ?? '',
@@ -71,11 +69,10 @@ const placeOrder = async (): Promise<void> => {
       shippingAddress: shippingAddress.value,
       subtotal: subtotal.value,
       shipping: 0,
-      tax: tax.value,
+      tax: 0,
       total: total.value,
     });
 
-    // Обновляем баланс в store
     authStore.updateBalance((user.value.balance ?? 0) - total.value);
     cartStore.clearCart();
     toast.success('Заказ успешно оформлен!');
@@ -100,7 +97,6 @@ const placeOrder = async (): Promise<void> => {
         <div class="card p-6">
           <h2 class="font-semibold text-gray-900 mb-4">📦 Адрес доставки</h2>
 
-          <!-- Saved addresses -->
           <div v-if="user?.addresses.length" class="space-y-3 mb-4">
             <label
               v-for="addr in user.addresses"
@@ -123,7 +119,6 @@ const placeOrder = async (): Promise<void> => {
             </label>
           </div>
 
-          <!-- New address toggle -->
           <button
             class="text-sm text-primary-600 hover:underline font-medium"
             @click="useNewAddress = !useNewAddress; selectedAddressId = ''"
@@ -182,7 +177,7 @@ const placeOrder = async (): Promise<void> => {
             </div>
           </div>
           <div v-if="!hasEnoughBalance" class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
-            ⚠️ Недостаточно средств. 
+            ⚠️ Недостаточно средств.
             <RouterLink to="/profile?tab=wallet" class="underline font-medium">Пополнить кошелёк</RouterLink>
           </div>
         </div>
@@ -193,7 +188,6 @@ const placeOrder = async (): Promise<void> => {
         <div class="card p-6 sticky top-20">
           <h2 class="font-semibold text-gray-900 mb-4">Ваш заказ</h2>
 
-          <!-- Items list -->
           <div class="space-y-3 mb-4">
             <div
               v-for="item in cartStore.items"
@@ -219,10 +213,6 @@ const placeOrder = async (): Promise<void> => {
             <div class="flex justify-between">
               <span class="text-gray-500">Доставка</span>
               <span class="text-green-600">Бесплатно</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-500">НДС (12%)</span>
-              <span>{{ formatPrice(tax) }}</span>
             </div>
             <div class="border-t border-gray-100 pt-2 flex justify-between font-bold text-base">
               <span>Итого</span>

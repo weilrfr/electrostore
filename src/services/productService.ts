@@ -27,6 +27,8 @@ export const getProducts = async (
   pageSize = 12,
   lastDoc?: QueryDocumentSnapshot,
 ): Promise<{ products: Product[]; lastDoc: QueryDocumentSnapshot | null }> => {
+  // Если есть фильтр по категории — делаем простой запрос без orderBy
+  // чтобы не требовались составные индексы Firestore
   let q = query(productsRef);
 
   if (filters.category) {
@@ -35,42 +37,46 @@ export const getProducts = async (
   if (filters.subcategory) {
     q = query(q, where('subcategory', '==', filters.subcategory));
   }
-  if (filters.minRating) {
-    q = query(q, where('rating', '>=', filters.minRating));
+
+  // orderBy применяем только если нет фильтров по полям (чтобы не нужны были индексы)
+  // При наличии category/subcategory сортируем на клиенте
+  const hasFieldFilter = !!(filters.category || filters.subcategory || filters.minRating);
+
+  if (!hasFieldFilter) {
+    switch (filters.sortBy) {
+      case 'price_asc':
+      case 'price_desc':
+        q = query(q, orderBy('price', filters.sortBy === 'price_asc' ? 'asc' : 'desc'));
+        break;
+      case 'rating':
+        q = query(q, orderBy('rating', 'desc'));
+        break;
+      default:
+        q = query(q, orderBy('createdAt', 'desc'));
+    }
   }
 
-  // Сортировка
-  switch (filters.sortBy) {
-    case 'price_asc':
-      q = query(q, orderBy('price', 'asc'));
-      break;
-    case 'price_desc':
-      q = query(q, orderBy('price', 'desc'));
-      break;
-    case 'rating':
-      q = query(q, orderBy('rating', 'desc'));
-      break;
-    default:
-      q = query(q, orderBy('createdAt', 'desc'));
-  }
-
-  if (lastDoc) {
+  if (!hasFieldFilter && lastDoc) {
     q = query(q, startAfter(lastDoc));
   }
 
-  q = query(q, limit(pageSize));
+  // Запрашиваем больше чтобы после клиентской фильтрации осталось достаточно
+  const fetchLimit = hasFieldFilter ? 200 : pageSize;
+  q = query(q, limit(fetchLimit));
 
   const snapshot = await getDocs(q);
   let products = snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
 
-  // Клиентская фильтрация по цене (Firestore не поддерживает range на нескольких полях)
+  // Клиентская фильтрация
+  if (filters.minRating) {
+    products = products.filter((p) => p.rating >= filters.minRating!);
+  }
   if (filters.minPrice !== undefined) {
     products = products.filter((p) => (p.discountPrice ?? p.price) >= filters.minPrice!);
   }
   if (filters.maxPrice !== undefined) {
     products = products.filter((p) => (p.discountPrice ?? p.price) <= filters.maxPrice!);
   }
-  // Поиск по названию
   if (filters.search) {
     const q2 = filters.search.toLowerCase();
     products = products.filter(
@@ -81,7 +87,31 @@ export const getProducts = async (
     );
   }
 
-  const last = snapshot.docs[snapshot.docs.length - 1] ?? null;
+  // Клиентская сортировка при наличии field-фильтров
+  if (hasFieldFilter) {
+    switch (filters.sortBy) {
+      case 'price_asc':
+        products.sort((a, b) => (a.discountPrice ?? a.price) - (b.discountPrice ?? b.price));
+        break;
+      case 'price_desc':
+        products.sort((a, b) => (b.discountPrice ?? b.price) - (a.discountPrice ?? a.price));
+        break;
+      case 'rating':
+        products.sort((a, b) => b.rating - a.rating);
+        break;
+      default:
+        // newest — сортируем по createdAt если есть
+        products.sort((a, b) => {
+          const aTime = a.createdAt?.toDate?.()?.getTime() ?? 0;
+          const bTime = b.createdAt?.toDate?.()?.getTime() ?? 0;
+          return bTime - aTime;
+        });
+    }
+    // Применяем пагинацию на клиенте
+    products = products.slice(0, pageSize);
+  }
+
+  const last = hasFieldFilter ? null : (snapshot.docs[snapshot.docs.length - 1] ?? null);
   return { products, lastDoc: last };
 };
 
@@ -108,10 +138,10 @@ export const getRelatedProducts = async (
   category: string,
   limitCount = 4,
 ): Promise<Product[]> => {
+  // Без orderBy чтобы не требовался индекс
   const q = query(
     productsRef,
     where('category', '==', category),
-    orderBy('rating', 'desc'),
     limit(limitCount + 1),
   );
   const snapshot = await getDocs(q);
@@ -141,7 +171,6 @@ export const getCategories = async (): Promise<Category[]> => {
 export const createProduct = async (
   data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>,
 ): Promise<string> => {
-  // Удаляем все undefined значения перед отправкой в Firestore
   const cleanData = Object.fromEntries(
     Object.entries(data).filter(([_, value]) => value !== undefined),
   );
@@ -158,7 +187,6 @@ export const updateProduct = async (
   id: string,
   data: Partial<Omit<Product, 'id' | 'createdAt'>>,
 ): Promise<void> => {
-  // Удаляем все undefined значения перед отправкой в Firestore
   const cleanData = Object.fromEntries(
     Object.entries(data).filter(([_, value]) => value !== undefined),
   );

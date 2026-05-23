@@ -1,8 +1,5 @@
 // ─── Форматирование ───────────────────────────────────────────────────────────
 
-/**
- * Форматирует цену в рублях
- */
 export const formatPrice = (price: number): string => {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
@@ -12,9 +9,6 @@ export const formatPrice = (price: number): string => {
   }).format(price);
 };
 
-/**
- * Форматирует дату из Timestamp или Date
- */
 export const formatDate = (date: Date | { toDate(): Date }): string => {
   const d = 'toDate' in date ? date.toDate() : date;
   return new Intl.DateTimeFormat('ru-RU', {
@@ -24,9 +18,6 @@ export const formatDate = (date: Date | { toDate(): Date }): string => {
   }).format(d);
 };
 
-/**
- * Форматирует дату и время
- */
 export const formatDateTime = (date: Date | { toDate(): Date }): string => {
   const d = 'toDate' in date ? date.toDate() : date;
   return new Intl.DateTimeFormat('ru-RU', {
@@ -70,8 +61,7 @@ export const TOPUP_STATUS_COLORS: Record<string, string> = {
 
 // ─── Константы ────────────────────────────────────────────────────────────────
 
-export const SHIPPING_COST = 0; // бесплатная доставка
-export const TAX_RATE = 0.12; // НДС 12%
+export const SHIPPING_COST = 0;
 export const ITEMS_PER_PAGE = 12;
 
 export const SORT_OPTIONS = [

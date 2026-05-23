@@ -74,7 +74,7 @@ const stepIndex = (status: string): number => steps.indexOf(status);
         </div>
       </div>
 
-      <!-- Progress tracker (не для cancelled) -->
+      <!-- Progress tracker -->
       <div v-if="order.status !== 'cancelled'" class="card p-6 mb-6">
         <div class="flex items-center">
           <template v-for="(step, i) in steps" :key="step">
@@ -131,10 +131,6 @@ const stepIndex = (status: string): number => steps.indexOf(status);
             <div class="flex justify-between">
               <span class="text-gray-500">Доставка</span>
               <span class="text-green-600">Бесплатно</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-500">НДС</span>
-              <span>{{ formatPrice(order.tax) }}</span>
             </div>
             <div class="border-t pt-2 flex justify-between font-bold">
               <span>Итого</span>

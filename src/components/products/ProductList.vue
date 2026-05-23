@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useProductStore } from '@/stores/productStore';
 import ProductCard from './ProductCard.vue';
 import SkeletonCard from '@/components/common/SkeletonCard.vue';
@@ -19,7 +19,6 @@ const selectedRating = ref(0);
 const selectedSort = ref<ProductFilter['sortBy']>('newest');
 const showFilters = ref(false);
 
-// Применить фильтры
 const applyFilters = (): void => {
   productStore.setFilters({
     category: props.initialCategory,
@@ -35,11 +34,16 @@ const resetFilters = (): void => {
   maxPrice.value = '';
   selectedRating.value = 0;
   selectedSort.value = 'newest';
-  productStore.resetFilters();
+  productStore.setFilters({ category: props.initialCategory });
 };
 
-// При смене категории сбрасываем и перезагружаем
-watch(() => props.initialCategory, () => applyFilters(), { immediate: true });
+onMounted(() => {
+  applyFilters();
+});
+
+watch(() => props.initialCategory, () => {
+  applyFilters();
+});
 
 const loadMore = (): void => {
   productStore.fetchMore();
