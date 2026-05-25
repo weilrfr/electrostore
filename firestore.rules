@@ -27,6 +27,12 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // ─── Корзины ──────────────────────────────────────────────────────────
+
+    match /carts/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
     // ─── Товары ───────────────────────────────────────────────────────────
 
     match /products/{productId} {
@@ -67,7 +73,7 @@ service cloud.firestore {
     match /walletTransactions/{txId} {
       allow read: if isAuthenticated() &&
         (request.auth.uid == resource.data.userId || isAdmin());
-      allow create: if isAdmin(); // создаются только через cloud functions / транзакции
+      allow create: if isAdmin();
       allow update, delete: if false;
     }
 
@@ -82,4 +88,3 @@ service cloud.firestore {
     }
   }
 }
-

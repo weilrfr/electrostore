@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { CartItem, Product } from '@/types';
+import { getCart, saveCart, clearCartInDB } from '@/services/cartService';
 
 const CART_KEY = 'technomarket_cart';
 
 export const useCartStore = defineStore('cart', () => {
-  const items = ref<CartItem[]>(loadFromStorage());
+  const items = ref<CartItem[]>([]);
+  const currentUserId = ref<string | null>(null);
+  const isInitialized = ref(false);
 
   // ─── Computed ──────────────────────────────────────────────────────────────
 
@@ -20,13 +23,58 @@ export const useCartStore = defineStore('cart', () => {
     }, 0),
   );
 
-  // ─── Actions ───────────────────────────────────────────────────────────────
+  // ─── Инициализация ────────────────────────────────────────────────────────
+
+  const initCart = async (userId: string | null): Promise<void> => {
+    // Если userId не изменился — не переинициализируем
+    if (isInitialized.value && currentUserId.value === userId) return;
+
+    currentUserId.value = userId;
+
+    if (userId) {
+      try {
+        const remoteItems = await getCart(userId);
+        const guestItems = loadFromLocalStorage();
+
+        if (guestItems.length > 0) {
+          const merged = mergeItems(remoteItems, guestItems);
+          items.value = merged;
+          await saveCart(userId, merged);
+          localStorage.removeItem(CART_KEY);
+        } else {
+          items.value = remoteItems;
+        }
+      } catch (e) {
+        console.error('Failed to load cart from Firestore:', e);
+        items.value = loadFromLocalStorage();
+      }
+    } else {
+      items.value = loadFromLocalStorage();
+    }
+
+    isInitialized.value = true;
+  };
+
+  // ─── Persist ──────────────────────────────────────────────────────────────
+
+  const persist = async (): Promise<void> => {
+    if (currentUserId.value) {
+      try {
+        await saveCart(currentUserId.value, items.value);
+      } catch (e) {
+        console.error('Failed to save cart to Firestore:', e);
+      }
+    } else {
+      saveToLocalStorage();
+    }
+  };
+
+  // ─── Actions ──────────────────────────────────────────────────────────────
 
   const addItem = (product: Product, quantity = 1): void => {
     const existing = items.value.find((i) => i.productId === product.id);
     if (existing) {
-      const newQty = Math.min(existing.quantity + quantity, product.stock);
-      existing.quantity = newQty;
+      existing.quantity = Math.min(existing.quantity + quantity, product.stock);
     } else {
       items.value.push({
         productId: product.id,
@@ -38,12 +86,12 @@ export const useCartStore = defineStore('cart', () => {
         stock: product.stock,
       });
     }
-    saveToStorage();
+    persist();
   };
 
   const removeItem = (productId: string): void => {
     items.value = items.value.filter((i) => i.productId !== productId);
-    saveToStorage();
+    persist();
   };
 
   const updateQuantity = (productId: string, quantity: number): void => {
@@ -53,22 +101,40 @@ export const useCartStore = defineStore('cart', () => {
       removeItem(productId);
     } else {
       item.quantity = Math.min(quantity, item.stock);
-      saveToStorage();
+      persist();
     }
   };
 
   const clearCart = (): void => {
     items.value = [];
-    localStorage.removeItem(CART_KEY);
+    if (currentUserId.value) {
+      clearCartInDB(currentUserId.value).catch(console.error);
+    } else {
+      localStorage.removeItem(CART_KEY);
+    }
   };
 
-  // ─── Helpers ───────────────────────────────────────────────────────────────
+  // ─── Helpers ──────────────────────────────────────────────────────────────
 
-  function saveToStorage(): void {
+  function mergeItems(remote: CartItem[], local: CartItem[]): CartItem[] {
+    const map = new Map<string, CartItem>();
+    for (const item of remote) map.set(item.productId, { ...item });
+    for (const item of local) {
+      const existing = map.get(item.productId);
+      if (existing) {
+        existing.quantity = Math.min(existing.quantity + item.quantity, existing.stock);
+      } else {
+        map.set(item.productId, { ...item });
+      }
+    }
+    return Array.from(map.values());
+  }
+
+  function saveToLocalStorage(): void {
     localStorage.setItem(CART_KEY, JSON.stringify(items.value));
   }
 
-  function loadFromStorage(): CartItem[] {
+  function loadFromLocalStorage(): CartItem[] {
     try {
       const raw = localStorage.getItem(CART_KEY);
       return raw ? (JSON.parse(raw) as CartItem[]) : [];
@@ -81,6 +147,8 @@ export const useCartStore = defineStore('cart', () => {
     items,
     itemCount,
     subtotal,
+    isInitialized,
+    initCart,
     addItem,
     removeItem,
     updateQuantity,

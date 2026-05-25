@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { toast } from 'vue3-toastify';
 import { useCartStore } from '@/stores/cartStore';
+import { useAuthStore } from '@/stores/authStore';
 import type { Product } from '@/types';
 import { formatPrice } from '@/utils';
 
@@ -11,6 +13,8 @@ interface Props {
 
 const props = defineProps<Props>();
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+const router = useRouter();
 
 const displayPrice = computed(() => props.product.discountPrice ?? props.product.price);
 const hasDiscount = computed(() => !!props.product.discountPrice);
@@ -21,6 +25,13 @@ const discountPercent = computed(() => {
 
 const handleAddToCart = (): void => {
   if (props.product.stock === 0) return;
+
+  if (!authStore.isAuthenticated) {
+    toast.info('Войдите в аккаунт, чтобы добавить товар в корзину');
+    router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } });
+    return;
+  }
+
   cartStore.addItem(props.product, 1);
   toast.success(`${props.product.name} добавлен в корзину`);
 };
@@ -100,6 +111,7 @@ const renderStars = (rating: number): boolean[] => {
           @click="handleAddToCart"
         >
           <span v-if="product.stock === 0">Нет в наличии</span>
+          <span v-else-if="!authStore.isAuthenticated">Войти для покупки</span>
           <span v-else>В корзину</span>
         </button>
       </div>

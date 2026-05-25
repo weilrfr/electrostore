@@ -38,39 +38,37 @@ onMounted(async () => {
     router.push('/404');
     return;
   }
-  
+
   try {
     const [prod, revs] = await Promise.all([
       getProductById(id),
       getProductReviews(id),
     ]);
-    
+
     if (!prod) {
       console.warn(`Product not found with ID: ${id}`);
       router.push('/404');
       return;
     }
-    
+
     product.value = prod;
     reviews.value = revs;
-    
+
     try {
       relatedProducts.value = await getRelatedProducts(id, prod.category, 4);
     } catch (e) {
       console.warn('Could not load related products:', e);
-      // Не критичная ошибка, продолжаем
     }
   } catch (error: unknown) {
     console.error('Product page error:', error);
     const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
-    
+
     if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
       toast.error('❌ Нет доступа к товару');
     } else {
       toast.error(`❌ Ошибка загрузки: ${message}`);
     }
-    
-    // После задержки редирект на главную
+
     setTimeout(() => router.push('/'), 2000);
   } finally {
     loading.value = false;
@@ -79,6 +77,13 @@ onMounted(async () => {
 
 const addToCart = (): void => {
   if (!product.value) return;
+
+  if (!authStore.isAuthenticated) {
+    toast.info('Войдите в аккаунт, чтобы добавить товар в корзину');
+    router.push({ name: 'login', query: { redirect: route.fullPath } });
+    return;
+  }
+
   cartStore.addItem(product.value, quantity.value);
   toast.success('Товар добавлен в корзину');
 };
@@ -184,8 +189,11 @@ const helpful = async (reviewId: string): Promise<void> => {
           </div>
 
           <!-- Quantity + Add to cart -->
-          <div v-if="product.stock > 0" class="flex items-center gap-3 mb-6">
-            <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+          <div v-if="product.stock > 0" class="flex items-center gap-3 mb-4">
+            <div
+              v-if="authStore.isAuthenticated"
+              class="flex items-center border border-gray-300 rounded-lg overflow-hidden"
+            >
               <button
                 class="px-3 py-2 hover:bg-gray-100 transition-colors disabled:opacity-40"
                 :disabled="quantity <= 1"
@@ -199,9 +207,21 @@ const helpful = async (reviewId: string): Promise<void> => {
               >+</button>
             </div>
             <button class="btn-primary flex-1" @click="addToCart">
-              🛒 В корзину
+              <span v-if="authStore.isAuthenticated">🛒 В корзину</span>
+              <span v-else>🔒 Войти для покупки</span>
             </button>
           </div>
+
+          <!-- Auth hint for guests -->
+          <p v-if="!authStore.isAuthenticated && product.stock > 0" class="text-sm text-gray-400 mb-6">
+            <RouterLink
+              :to="{ name: 'login', query: { redirect: $route.fullPath } }"
+              class="text-primary-600 hover:underline font-medium"
+            >Войдите</RouterLink>
+            или
+            <RouterLink to="/auth/register" class="text-primary-600 hover:underline font-medium">зарегистрируйтесь</RouterLink>,
+            чтобы добавить товар в корзину
+          </p>
 
           <!-- Description -->
           <p class="text-gray-600 text-sm leading-relaxed mb-6">{{ product.description }}</p>
