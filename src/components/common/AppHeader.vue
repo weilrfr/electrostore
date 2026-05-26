@@ -8,6 +8,7 @@ import { logout } from '@/services/authService';
 import { useUserStore } from '@/stores/userStore';
 import { toast } from 'vue3-toastify';
 import { formatPrice } from '@/utils';
+import { onClickOutside } from '@vueuse/core';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -18,6 +19,11 @@ const userStore = useUserStore();
 const searchQuery = ref('');
 const mobileMenuOpen = ref(false);
 const userMenuOpen = ref(false);
+const userMenuRef = ref<HTMLElement | null>(null);
+
+onClickOutside(userMenuRef, () => {
+  userMenuOpen.value = false;
+});
 
 const isAuthenticated = computed(() => authStore.isAuthenticated);
 const isAdmin = computed(() => authStore.isAdmin);
@@ -119,7 +125,7 @@ const navLinks = [
           </RouterLink>
 
           <!-- User menu -->
-          <div v-if="isAuthenticated" class="relative">
+          <div v-if="isAuthenticated" class="relative" ref="userMenuRef">
             <button
               class="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-100 transition-colors"
               @click="userMenuOpen = !userMenuOpen"
@@ -136,7 +142,6 @@ const navLinks = [
             <Transition name="fade">
               <div
                 v-if="userMenuOpen"
-                v-click-outside="() => (userMenuOpen = false)"
                 class="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border
                        border-gray-100 py-1 z-50"
               >

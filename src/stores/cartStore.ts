@@ -39,7 +39,7 @@ export const useCartStore = defineStore('cart', () => {
         if (guestItems.length > 0) {
           const merged = mergeItems(remoteItems, guestItems);
           items.value = merged;
-          await saveCart(userId, merged);
+          await saveCart(userId, JSON.parse(JSON.stringify(merged)));
           localStorage.removeItem(CART_KEY);
         } else {
           items.value = remoteItems;
@@ -55,12 +55,12 @@ export const useCartStore = defineStore('cart', () => {
     isInitialized.value = true;
   };
 
-  // ─── Persist ──────────────────────────────────────────────────────────────
-
   const persist = async (): Promise<void> => {
     if (currentUserId.value) {
       try {
-        await saveCart(currentUserId.value, items.value);
+        // Избавляемся от Proxy и удаляем undefined поля (например, discountPrice), которые ломают Firestore
+        const cleanItems = JSON.parse(JSON.stringify(items.value));
+        await saveCart(currentUserId.value, cleanItems);
       } catch (e) {
         console.error('Failed to save cart to Firestore:', e);
       }
