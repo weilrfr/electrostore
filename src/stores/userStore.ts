@@ -14,6 +14,9 @@ export const useUserStore = defineStore('user', () => {
     ordersLoading.value = true;
     try {
       orders.value = await getUserOrders(userId);
+    } catch (error) {
+      console.error('Ошибка загрузки заказов:', error);
+      orders.value = [];
     } finally {
       ordersLoading.value = false;
     }

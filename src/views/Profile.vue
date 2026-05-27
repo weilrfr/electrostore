@@ -34,7 +34,7 @@ const requestingTopup = ref(false);
 const showAddressForm = ref(false);
 const newAddr = ref<Omit<Address, 'id' | 'isDefault'>>({
   firstName: '', lastName: '', address: '', city: '',
-  postalCode: '', country: 'Казахстан', phone: '',
+  country: 'Казахстан', phone: '',
 });
 
 onMounted(async () => {
@@ -76,7 +76,7 @@ const addNewAddress = async (): Promise<void> => {
     await addAddress(user.value.uid, address);
     authStore.setUser({ ...user.value, addresses: [...user.value.addresses, address] });
     showAddressForm.value = false;
-    newAddr.value = { firstName: '', lastName: '', address: '', city: '', postalCode: '', country: 'Казахстан', phone: '' };
+    newAddr.value = { firstName: '', lastName: '', address: '', city: '', country: 'Казахстан', phone: '' };
     toast.success('Адрес добавлен');
   } catch { toast.error('Ошибка добавления адреса'); }
 };
@@ -210,7 +210,7 @@ const tabs = [
             <span v-if="addr.isDefault" class="badge bg-primary-100 text-primary-700 text-xs">По умолчанию</span>
           </div>
           <p class="text-gray-500">{{ addr.address }}</p>
-          <p class="text-gray-500">{{ addr.city }}, {{ addr.postalCode }}</p>
+          <p class="text-gray-500">{{ addr.city }}</p>
           <p class="text-gray-500">{{ addr.phone }}</p>
         </div>
         <button class="text-red-400 hover:text-red-600 text-sm shrink-0" @click="removeAddress(addr)">
@@ -245,10 +245,7 @@ const tabs = [
             <label class="block text-sm font-medium text-gray-700 mb-1">Город</label>
             <input v-model="newAddr.city" class="input-field" />
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Индекс</label>
-            <input v-model="newAddr.postalCode" class="input-field" />
-          </div>
+
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
             <input v-model="newAddr.phone" class="input-field" />

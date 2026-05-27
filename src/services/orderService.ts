@@ -32,7 +32,6 @@ export interface CreateOrderData {
   shippingAddress: Address;
   subtotal: number;
   shipping: number;
-  tax: number;
   total: number;
 }
 
@@ -65,7 +64,6 @@ export const createOrder = async (data: CreateOrderData): Promise<string> => {
       items: orderItems,
       subtotal: data.subtotal,
       shipping: data.shipping,
-      tax: data.tax,
       total: data.total,
       shippingAddress: data.shippingAddress,
       paymentMethod: 'wallet',

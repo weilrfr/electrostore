@@ -150,7 +150,7 @@ const stepIndex = (status: string): number => steps.indexOf(status);
           <div class="text-sm text-gray-600 space-y-1">
             <p class="font-medium text-gray-900">{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}</p>
             <p>{{ order.shippingAddress.address }}</p>
-            <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.postalCode }}</p>
+            <p>{{ order.shippingAddress.city }}</p>
             <p>{{ order.shippingAddress.country }}</p>
             <p>{{ order.shippingAddress.phone }}</p>
           </div>

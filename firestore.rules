@@ -50,7 +50,9 @@ service cloud.firestore {
     // ─── Заказы ───────────────────────────────────────────────────────────
 
     match /orders/{orderId} {
-      allow read: if isAuthenticated() &&
+      allow get: if isAuthenticated() &&
+        (request.auth.uid == resource.data.userId || isAdmin());
+      allow list: if isAuthenticated() &&
         (request.auth.uid == resource.data.userId || isAdmin());
       allow create: if isAuthenticated();
       allow update: if isAdmin();
@@ -73,7 +75,8 @@ service cloud.firestore {
     match /walletTransactions/{txId} {
       allow read: if isAuthenticated() &&
         (request.auth.uid == resource.data.userId || isAdmin());
-      allow create: if isAdmin();
+      allow create: if isAuthenticated() &&
+        (request.auth.uid == request.resource.data.userId || isAdmin());
       allow update, delete: if false;
     }
 

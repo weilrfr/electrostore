@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useProductStore } from '@/stores/productStore';
+import { useAuthStore } from '@/stores/authStore';
 import ProductCard from '@/components/products/ProductCard.vue';
 import SkeletonCard from '@/components/common/SkeletonCard.vue';
 
 const productStore = useProductStore();
+const authStore = useAuthStore();
 
 onMounted(async () => {
   await Promise.all([
@@ -49,7 +51,7 @@ const heroSlides = [
             <RouterLink to="/shop" class="bg-white text-primary-700 font-semibold px-6 py-3 rounded-xl hover:bg-primary-50 transition-colors">
               Перейти в каталог
             </RouterLink>
-            <RouterLink to="/auth/register" class="border border-white/50 text-white font-medium px-6 py-3 rounded-xl hover:bg-white/10 transition-colors">
+            <RouterLink v-if="!authStore.isAuthenticated" to="/auth/register" class="border border-white/50 text-white font-medium px-6 py-3 rounded-xl hover:bg-white/10 transition-colors">
               Зарегистрироваться
             </RouterLink>
           </div>

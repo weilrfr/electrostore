@@ -26,7 +26,6 @@ const newAddress = ref<Omit<Address, 'id' | 'isDefault'>>({
   lastName: user.value?.lastName ?? '',
   address: '',
   city: '',
-  postalCode: '',
   country: 'Казахстан',
   phone: user.value?.phone ?? '',
 });
@@ -47,7 +46,7 @@ const shippingAddress = computed((): Address | null => {
 const canCheckout = computed(() => {
   if (!shippingAddress.value) return false;
   const a = shippingAddress.value;
-  return !!(a.address && a.city && a.postalCode && a.phone);
+  return !!(a.address && a.city && a.phone);
 });
 
 const hasEnoughBalance = computed(() =>
@@ -69,7 +68,6 @@ const placeOrder = async (): Promise<void> => {
       shippingAddress: shippingAddress.value,
       subtotal: subtotal.value,
       shipping: 0,
-      tax: 0,
       total: total.value,
     });
 
@@ -113,7 +111,7 @@ const placeOrder = async (): Promise<void> => {
               />
               <div class="text-sm">
                 <p class="font-medium text-gray-900">{{ addr.firstName }} {{ addr.lastName }}</p>
-                <p class="text-gray-500">{{ addr.address }}, {{ addr.city }}, {{ addr.postalCode }}</p>
+                <p class="text-gray-500">{{ addr.address }}, {{ addr.city }}</p>
                 <p class="text-gray-500">{{ addr.phone }}</p>
               </div>
             </label>
@@ -144,10 +142,7 @@ const placeOrder = async (): Promise<void> => {
                 <label class="block text-sm font-medium text-gray-700 mb-1">Город</label>
                 <input v-model="newAddress.city" class="input-field" placeholder="Алматы" />
               </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Почтовый индекс</label>
-                <input v-model="newAddress.postalCode" class="input-field" placeholder="050000" />
-              </div>
+
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Страна</label>
                 <input v-model="newAddress.country" class="input-field" />

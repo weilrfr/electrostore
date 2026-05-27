@@ -8,7 +8,6 @@ export interface Address {
   lastName: string;
   address: string;
   city: string;
-  postalCode: string;
   country: string;
   phone: string;
   isDefault: boolean;
@@ -112,7 +111,6 @@ export interface Order {
   items: OrderItem[];
   subtotal: number;
   shipping: number;
-  tax: number;
   total: number;
   shippingAddress: Address;
   paymentMethod: 'wallet';
