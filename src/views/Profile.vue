@@ -3,16 +3,14 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toast } from 'vue3-toastify';
 import { useAuthStore } from '@/stores/authStore';
-import { useUserStore } from '@/stores/userStore';
 import { updateUserProfile, uploadAvatar, addAddress, deleteAddress, createTopupRequest, getWalletTransactions } from '@/services/userService';
 import type { Address, WalletTransaction } from '@/types';
-import { formatPrice, formatDateTime, TOPUP_STATUS_LABELS, TOPUP_STATUS_COLORS } from '@/utils';
+import { formatPrice, formatDateTime } from '@/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
-const userStore = useUserStore();
 
 const user = computed(() => authStore.currentUser);
 const activeTab = ref((route.query.tab as string) || 'profile');
@@ -110,7 +108,7 @@ const requestTopup = async (): Promise<void> => {
     const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
     
     if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
-      toast.error('❌ Ошибка доступа. Проверьте Firestore правила или переподключитесь.');
+      toast.error('Ошибка доступа. Проверьте Firestore правила или переподключитесь.');
     } else {
       toast.error(`Ошибка: ${message}`);
     }
@@ -120,8 +118,12 @@ const requestTopup = async (): Promise<void> => {
 };
 
 const txTypeIcon = (type: string): string => {
-  const icons: Record<string, string> = { topup: '📥', purchase: '🛒', refund: '↩️' };
-  return icons[type] ?? '💰';
+  const icons: Record<string, string> = {
+    topup: 'fa-solid fa-circle-down text-green-500',
+    purchase: 'fa-solid fa-cart-shopping text-blue-500',
+    refund: 'fa-solid fa-arrow-rotate-left text-yellow-500',
+  };
+  return icons[type] ?? 'fa-solid fa-coins text-gray-500';
 };
 
 const tabs = [
@@ -162,7 +164,7 @@ const tabs = [
             <span v-else class="text-3xl font-bold text-primary-600">{{ user?.firstName?.charAt(0) }}</span>
           </div>
           <label class="absolute bottom-0 right-0 w-7 h-7 bg-primary-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-primary-700">
-            <span class="text-white text-xs">✎</span>
+            <i class="fa-solid fa-pen text-white text-xs"></i>
             <input type="file" accept="image/*" class="hidden" @change="handleAvatarChange" />
           </label>
         </div>
@@ -219,7 +221,7 @@ const tabs = [
       </div>
 
       <div v-if="!user?.addresses.length" class="text-center py-10 text-gray-400">
-        <p class="text-5xl mb-3">📍</p>
+        <p class="text-5xl mb-3 text-gray-300"><i class="fa-solid fa-map-pin"></i></p>
         <p>Нет сохранённых адресов</p>
       </div>
 
@@ -317,7 +319,9 @@ const tabs = [
             :key="tx.id"
             class="flex items-center gap-3 py-3 border-b border-gray-50 last:border-0"
           >
-            <span class="text-2xl">{{ txTypeIcon(tx.type) }}</span>
+            <span class="text-xl w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center shrink-0">
+              <i :class="txTypeIcon(tx.type)"></i>
+            </span>
             <div class="flex-1">
               <p class="text-sm font-medium text-gray-900">{{ tx.description }}</p>
               <p class="text-xs text-gray-400">{{ formatDateTime(tx.createdAt) }}</p>

@@ -20,7 +20,9 @@ const total = computed(() => subtotal.value + shipping.value);
 
     <!-- Empty cart -->
     <div v-if="cartStore.items.length === 0" class="text-center py-20">
-      <div class="text-7xl mb-4">🛒</div>
+      <div class="text-7xl mb-4 text-gray-300">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
       <p class="text-xl font-medium text-gray-700 mb-2">Корзина пуста</p>
       <p class="text-gray-400 mb-8">Добавьте товары, чтобы оформить заказ</p>
       <RouterLink to="/shop" class="btn-primary">Перейти в каталог</RouterLink>

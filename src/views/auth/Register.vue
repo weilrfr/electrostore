@@ -91,7 +91,7 @@ const handleRegister = async (): Promise<void> => {
                 required
               />
               <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" @click="showPass = !showPass">
-                {{ showPass ? '🙈' : '👁️' }}
+                <i :class="showPass ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
               </button>
             </div>
           </div>

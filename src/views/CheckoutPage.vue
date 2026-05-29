@@ -93,7 +93,9 @@ const placeOrder = async (): Promise<void> => {
 
         <!-- Delivery address -->
         <div class="card p-6">
-          <h2 class="font-semibold text-gray-900 mb-4">📦 Адрес доставки</h2>
+          <h2 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-box text-primary-600"></i> Адрес доставки
+          </h2>
 
           <div v-if="user?.addresses.length" class="space-y-3 mb-4">
             <label
@@ -157,10 +159,12 @@ const placeOrder = async (): Promise<void> => {
 
         <!-- Payment method -->
         <div class="card p-6">
-          <h2 class="font-semibold text-gray-900 mb-4">💳 Способ оплаты</h2>
+          <h2 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-credit-card text-primary-600"></i> Способ оплаты
+          </h2>
           <div class="flex items-center gap-3 p-4 border-2 border-primary-500 bg-primary-50 rounded-xl">
-            <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white text-xl">
-              💰
+            <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white text-lg">
+              <i class="fa-solid fa-wallet"></i>
             </div>
             <div class="flex-1">
               <p class="font-medium text-gray-900">Кошелёк ТехноМаркет</p>
@@ -171,9 +175,9 @@ const placeOrder = async (): Promise<void> => {
               </p>
             </div>
           </div>
-          <div v-if="!hasEnoughBalance" class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
-            ⚠️ Недостаточно средств.
-            <RouterLink to="/profile?tab=wallet" class="underline font-medium">Пополнить кошелёк</RouterLink>
+          <div v-if="!hasEnoughBalance" class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Недостаточно средств. <RouterLink to="/profile?tab=wallet" class="underline font-medium">Пополнить кошелёк</RouterLink></span>
           </div>
         </div>
       </div>

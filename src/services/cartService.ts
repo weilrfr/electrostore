@@ -2,8 +2,6 @@ import {
   doc,
   getDoc,
   setDoc,
-  updateDoc,
-  deleteField,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import type { CartItem } from '@/types';

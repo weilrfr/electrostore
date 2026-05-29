@@ -37,7 +37,9 @@ service cloud.firestore {
 
     match /products/{productId} {
       allow read: if true;
-      allow create, update, delete: if isAuthenticated() && isAdmin();
+      allow create, delete: if isAuthenticated() && isAdmin();
+      allow update: if (isAuthenticated() && isAdmin()) ||
+        (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviews', 'rating']));
     }
 
     // ─── Категории ────────────────────────────────────────────────────────

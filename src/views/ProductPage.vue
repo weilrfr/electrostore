@@ -64,9 +64,9 @@ onMounted(async () => {
     const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
 
     if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
-      toast.error('❌ Нет доступа к товару');
+      toast.error('Нет доступа к товару');
     } else {
-      toast.error(`❌ Ошибка загрузки: ${message}`);
+      toast.error(`Ошибка загрузки: ${message}`);
     }
 
     setTimeout(() => router.push('/'), 2000);
@@ -182,10 +182,14 @@ const helpful = async (reviewId: string): Promise<void> => {
 
           <!-- Stock -->
           <div class="mb-4">
-            <span v-if="product.stock > 0" class="text-sm text-green-600 font-medium">
-              ✓ В наличии ({{ product.stock }} шт)
+            <span v-if="product.stock > 0" class="text-sm text-green-600 font-medium flex items-center gap-1">
+              <i class="fa-solid fa-circle-check"></i>
+              В наличии ({{ product.stock }} шт)
             </span>
-            <span v-else class="text-sm text-red-500 font-medium">✗ Нет в наличии</span>
+            <span v-else class="text-sm text-red-500 font-medium flex items-center gap-1">
+              <i class="fa-solid fa-circle-xmark"></i>
+              Нет в наличии
+            </span>
           </div>
 
           <!-- Quantity + Add to cart -->
@@ -207,8 +211,14 @@ const helpful = async (reviewId: string): Promise<void> => {
               >+</button>
             </div>
             <button class="btn-primary flex-1" @click="addToCart">
-              <span v-if="authStore.isAuthenticated">🛒 В корзину</span>
-              <span v-else>🔒 Войти для покупки</span>
+              <span v-if="authStore.isAuthenticated" class="flex items-center justify-center gap-2">
+                <i class="fa-solid fa-cart-shopping"></i>
+                В корзину
+              </span>
+              <span v-else class="flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lock"></i>
+                Войти для покупки
+              </span>
             </button>
           </div>
 
@@ -315,8 +325,9 @@ const helpful = async (reviewId: string): Promise<void> => {
             </div>
             <h4 class="font-medium text-gray-900 mt-3">{{ review.title }}</h4>
             <p class="text-sm text-gray-600 mt-1 leading-relaxed">{{ review.comment }}</p>
-            <button class="mt-3 text-xs text-gray-400 hover:text-gray-600" @click="helpful(review.id)">
-              👍 Полезно ({{ review.helpful }})
+            <button class="mt-3 text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1" @click="helpful(review.id)">
+              <i class="fa-solid fa-thumbs-up"></i>
+              <span>Полезно ({{ review.helpful }})</span>
             </button>
           </div>
         </div>

@@ -15,22 +15,22 @@ onMounted(async () => {
   ]);
 });
 
-const heroSlides = [
-  {
-    title: 'Смартфоны нового поколения',
-    subtitle: 'Флагманские модели по лучшим ценам',
-    color: 'from-primary-700 to-primary-900',
-    emoji: '📱',
-    link: '/shop?category=smartphones',
-  },
-  {
-    title: 'Ноутбуки для работы и учёбы',
-    subtitle: 'Производительность без компромиссов',
-    color: 'from-purple-700 to-purple-900',
-    emoji: '💻',
-    link: '/shop?category=laptops',
-  },
-];
+// const heroSlides = [
+//   {
+//     title: 'Смартфоны нового поколения',
+//     subtitle: 'Флагманские модели по лучшим ценам',
+//     color: 'from-primary-700 to-primary-900',
+//     icon: 'fa-solid fa-mobile-screen-button',
+//     link: '/shop?category=smartphones',
+//   },
+//   {
+//     title: 'Ноутбуки для работы и учёбы',
+//     subtitle: 'Производительность без компромиссов',
+//     color: 'from-purple-700 to-purple-900',
+//     icon: 'fa-solid fa-laptop',
+//     link: '/shop?category=laptops',
+//   },
+// ];
 </script>
 
 <template>
@@ -56,7 +56,7 @@ const heroSlides = [
             </RouterLink>
           </div>
         </div>
-        <div class="text-9xl hidden sm:block select-none">🖥️</div>
+        <div class="text-8xl hidden sm:block select-none text-primary-200"><i class="fa-solid fa-desktop"></i></div>
       </div>
     </section>
 
@@ -66,17 +66,19 @@ const heroSlides = [
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <RouterLink
           v-for="cat in [
-            { icon: '📱', name: 'Смартфоны', slug: 'smartphones' },
-            { icon: '💻', name: 'Ноутбуки', slug: 'laptops' },
-            { icon: '📺', name: 'Телевизоры', slug: 'tvs' },
-            { icon: '🏠', name: 'Техника', slug: 'appliances' },
-            { icon: '🎧', name: 'Аксессуары', slug: 'accessories' },
+            { icon: 'fa-solid fa-mobile-screen-button', name: 'Смартфоны', slug: 'smartphones' },
+            { icon: 'fa-solid fa-laptop', name: 'Ноутбуки', slug: 'laptops' },
+            { icon: 'fa-solid fa-tv', name: 'Телевизоры', slug: 'tvs' },
+            { icon: 'fa-solid fa-plug', name: 'Техника', slug: 'appliances' },
+            { icon: 'fa-solid fa-headphones', name: 'Аксессуары', slug: 'accessories' },
           ]"
           :key="cat.slug"
           :to="`/shop?category=${cat.slug}`"
           class="card p-4 text-center hover:shadow-md hover:border-primary-200 border border-transparent transition-all group"
         >
-          <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">{{ cat.icon }}</div>
+          <div class="text-3xl text-primary-600 mb-2 group-hover:scale-110 transition-transform">
+            <i :class="cat.icon"></i>
+          </div>
           <p class="text-sm font-medium text-gray-700">{{ cat.name }}</p>
         </RouterLink>
       </div>
@@ -109,7 +111,7 @@ const heroSlides = [
     <!-- Wallet CTA -->
     <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center gap-6">
-        <div class="text-6xl">💳</div>
+        <div class="text-5xl text-green-100"><i class="fa-solid fa-credit-card"></i></div>
         <div class="flex-1 text-center sm:text-left">
           <h2 class="text-2xl font-bold">Пополните кошелёк и покупайте проще</h2>
           <p class="text-green-100 mt-2">

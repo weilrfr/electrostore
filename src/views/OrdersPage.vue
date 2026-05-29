@@ -26,7 +26,9 @@ onMounted(async () => {
       v-else-if="userStore.orders.length === 0"
       class="text-center py-20"
     >
-      <div class="text-7xl mb-4">📋</div>
+      <div class="text-7xl mb-4 text-gray-300">
+        <i class="fa-solid fa-clipboard-list"></i>
+      </div>
       <p class="text-xl font-medium text-gray-700 mb-2">Заказов пока нет</p>
       <p class="text-gray-400 mb-8">Перейдите в каталог, чтобы сделать первый заказ</p>
       <RouterLink to="/shop" class="btn-primary">В каталог</RouterLink>

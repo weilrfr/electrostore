@@ -48,8 +48,9 @@ const stepIndex = (status: string): number => steps.indexOf(status);
 <template>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex items-center gap-3 mb-6">
-      <RouterLink to="/orders" class="text-gray-400 hover:text-gray-600">
-        ← Мои заказы
+      <RouterLink to="/orders" class="text-gray-400 hover:text-gray-600 flex items-center gap-1">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Мои заказы</span>
       </RouterLink>
     </div>
 
@@ -139,8 +140,14 @@ const stepIndex = (status: string): number => steps.indexOf(status);
           </div>
           <div class="mt-3 pt-3 border-t">
             <p class="text-xs text-gray-500">Способ оплаты: Кошелёк ТехноМаркет</p>
-            <p class="text-xs mt-1" :class="order.paymentStatus === 'completed' ? 'text-green-600' : 'text-yellow-600'">
-              {{ order.paymentStatus === 'completed' ? '✓ Оплачено' : 'Ожидает оплаты' }}
+            <p class="text-xs mt-1 flex items-center gap-1" :class="order.paymentStatus === 'completed' ? 'text-green-600' : 'text-yellow-600'">
+              <template v-if="order.paymentStatus === 'completed'">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Оплачено</span>
+              </template>
+              <template v-else>
+                <span>Ожидает оплаты</span>
+              </template>
             </p>
           </div>
         </div>

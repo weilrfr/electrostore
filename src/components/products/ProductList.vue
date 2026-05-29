@@ -122,7 +122,7 @@ const loadMore = (): void => {
               ]"
               @click="selectedRating = selectedRating === r ? 0 : r"
             >
-              {{ r }}★
+              {{ r }} <i class="fa-solid fa-star text-yellow-400 text-xs ml-0.5"></i>
             </button>
           </div>
         </div>

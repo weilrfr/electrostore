@@ -38,9 +38,13 @@ const links = {
           <p class="text-sm text-gray-400 leading-relaxed">
             Лучшая электроника и бытовая техника с доставкой по всему Казахстану.
           </p>
-          <div class="mt-4 space-y-1 text-sm">
-            <p>📞 +7 (727) 123-45-67</p>
-            <p>✉️ info@technomarket.kz</p>
+          <div class="mt-4 space-y-2 text-sm text-gray-400">
+            <p class="flex items-center gap-2">
+              <i class="fa-solid fa-phone text-primary-500"></i> +7 (727) 123-45-67
+            </p>
+            <p class="flex items-center gap-2">
+              <i class="fa-solid fa-envelope text-primary-500"></i> info@technomarket.kz
+            </p>
           </div>
         </div>
 

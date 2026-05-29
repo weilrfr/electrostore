@@ -4,6 +4,7 @@ import { toast } from 'vue3-toastify';
 import { getAllOrders, updateOrderStatus } from '@/services/orderService';
 import { getAllTopupRequests, approveTopupRequest, rejectTopupRequest, getAllUsers } from '@/services/userService';
 import { getProducts, createProduct, updateProduct, deleteProduct } from '@/services/productService';
+import { seedDatabase } from '@/utils/seeder';
 import type { Order, TopupRequest, Product, OrderStatus } from '@/types';
 import { formatPrice, formatDate, ORDER_STATUS_LABELS, TOPUP_STATUS_LABELS, TOPUP_STATUS_COLORS } from '@/utils';
 import OrderStatusBadge from '@/components/common/OrderStatusBadge.vue';
@@ -17,6 +18,10 @@ const topupRequests = ref<TopupRequest[]>([]);
 const products = ref<Product[]>([]);
 const usersCount = ref(0);
 const loading = ref(true);
+
+// Seeding state
+const seeding = ref(false);
+const seedProgress = ref('');
 
 // Product form
 const showProductForm = ref(false);
@@ -40,7 +45,7 @@ const loadAll = async (): Promise<void> => {
     const [ords, reqs, prods, users] = await Promise.all([
       getAllOrders(),
       getAllTopupRequests(),
-      getProducts({}, 50).then((r) => r.products),
+      getProducts({}, 100).then((r) => r.products), // Загрузим побольше для админки
       getAllUsers(),
     ]);
     orders.value = ords;
@@ -49,6 +54,33 @@ const loadAll = async (): Promise<void> => {
     usersCount.value = users.length;
   } finally {
     loading.value = false;
+  }
+};
+
+const handleSeed = async (): Promise<void> => {
+  if (seeding.value) return;
+  if (!confirm('Вы уверены, что хотите импортировать демонстрационные данные? Это добавит 5 категорий и 25 товаров (по 5 для каждой категории) в Firebase.')) {
+    return;
+  }
+  seeding.value = true;
+  seedProgress.value = 'Подготовка к импорту...';
+  try {
+    const result = await seedDatabase((msg) => {
+      seedProgress.value = msg;
+    });
+    toast.success(`База данных успешно заполнена! Добавлено ${result.categoriesCount} категорий и ${result.productsCount} товаров.`);
+    await loadAll();
+  } catch (error: unknown) {
+    console.error('Seed error:', error);
+    const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
+    if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
+      toast.error('Ошибка доступа: у вас нет прав администратора в правилах базы данных.');
+    } else {
+      toast.error(`Ошибка импорта: ${message}`);
+    }
+  } finally {
+    seeding.value = false;
+    seedProgress.value = '';
   }
 };
 
@@ -158,11 +190,11 @@ const saveProduct = async (): Promise<void> => {
 
   try {
     if (editingProduct.value) {
-      await updateProduct(editingProduct.value.id, data);
-      toast.success('✅ Товар обновлён');
+      await updateProduct(editingProduct.value.id, data as any);
+      toast.success('Товар обновлён');
     } else {
-      await createProduct(data);
-      toast.success('✅ Товар добавлен');
+      await createProduct(data as any);
+      toast.success('Товар добавлен');
     }
     resetProductForm();
     products.value = (await getProducts({}, 50)).products;
@@ -171,11 +203,11 @@ const saveProduct = async (): Promise<void> => {
     const message = (error as { message?: string }).message ?? 'Неизвестная ошибка';
     
     if (message.includes('permission-denied') || message.includes('PERMISSION_DENIED')) {
-      toast.error('❌ Нет прав доступа. Проверьте что вы администратор.');
+      toast.error('Нет прав доступа. Проверьте что вы администратор.');
     } else if (message.includes('invalid-argument') || message.includes('invalid data')) {
-      toast.error('❌ Некорректные данные. Проверьте форму.');
+      toast.error('Некорректные данные. Проверьте форму.');
     } else {
-      toast.error(`❌ Ошибка: ${message}`);
+      toast.error(`Ошибка: ${message}`);
     }
   }
 };
@@ -187,12 +219,12 @@ const removeProduct = async (id: string): Promise<void> => {
   toast.success('Товар удалён');
 };
 
-const tabs = [
-  { id: 'dashboard', label: '📊 Дашборд' },
-  { id: 'orders', label: `📦 Заказы${pendingOrders.value ? ` (${pendingOrders.value})` : ''}` },
-  { id: 'products', label: '🛍️ Товары' },
-  { id: 'wallet', label: `💳 Пополнения${pendingTopups.value ? ` (${pendingTopups.value})` : ''}` },
-];
+const tabs = computed(() => [
+  { id: 'dashboard', label: 'Дашборд', icon: 'fa-solid fa-chart-simple' },
+  { id: 'orders', label: `Заказы${pendingOrders.value ? ` (${pendingOrders.value})` : ''}`, icon: 'fa-solid fa-box' },
+  { id: 'products', label: 'Товары', icon: 'fa-solid fa-bag-shopping' },
+  { id: 'wallet', label: `Пополнения${pendingTopups.value ? ` (${pendingTopups.value})` : ''}`, icon: 'fa-solid fa-credit-card' },
+]);
 </script>
 
 <template>
@@ -205,12 +237,13 @@ const tabs = [
         v-for="tab in tabs"
         :key="tab.id"
         :class="[
-          'px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors',
+          'px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors flex items-center gap-2',
           activeTab === tab.id ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700',
         ]"
         @click="activeTab = tab.id"
       >
-        {{ tab.label }}
+        <i :class="tab.icon" class="opacity-70"></i>
+        <span>{{ tab.label }}</span>
       </button>
     </div>
 
@@ -235,6 +268,33 @@ const tabs = [
         <div class="card p-5">
           <p class="text-sm text-gray-500">Заявок на пополнение</p>
           <p class="text-3xl font-bold text-yellow-600 mt-1">{{ pendingTopups }}</p>
+        </div>
+
+        <!-- Seeding Widget -->
+        <div class="card p-6 col-span-2 lg:col-span-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex-1">
+            <h3 class="font-bold text-indigo-900 text-lg flex items-center gap-2">
+              <i class="fa-solid fa-gear text-indigo-600"></i> Демонстрационные данные
+            </h3>
+            <p class="text-sm text-indigo-700 mt-1 max-w-2xl">
+              Если в вашей базе данных еще нет товаров, вы можете импортировать демонстрационный каталог. 
+              Это автоматически создаст 5 категорий и 25 проработанных товаров (по 5 для каждой категории: смартфоны, ноутбуки, телевизоры, бытовая техника, аксессуары) с реалистичными характеристиками, ценами и изображениями.
+            </p>
+            <div v-if="seeding" class="mt-3 flex items-center gap-2 text-sm text-indigo-600 font-medium">
+              <span class="animate-spin text-lg">⏳</span>
+              <span>{{ seedProgress }}</span>
+            </div>
+          </div>
+          <div class="shrink-0 flex items-center">
+            <button 
+              class="btn-primary bg-indigo-600 hover:bg-indigo-700 border-indigo-600 text-white shadow-md shadow-indigo-100 flex items-center gap-2 disabled:opacity-50"
+              :disabled="seeding"
+              @click="handleSeed"
+            >
+              <span v-if="seeding"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Импорт...</span>
+              <span v-else><i class="fa-solid fa-file-import mr-1"></i> Импортировать демо-данные</span>
+            </button>
+          </div>
         </div>
 
         <!-- Recent orders -->
@@ -408,7 +468,7 @@ const tabs = [
                   <td class="px-4 py-3">
                     <span :class="p.stock > 0 ? 'text-green-600' : 'text-red-500'">{{ p.stock }}</span>
                   </td>
-                  <td class="px-4 py-3">★ {{ p.rating.toFixed(1) }}</td>
+                  <td class="px-4 py-3"><i class="fa-solid fa-star text-yellow-400 mr-1"></i>{{ p.rating.toFixed(1) }}</td>
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2 justify-end">
                       <button class="text-primary-600 hover:underline text-xs" @click="startEditProduct(p)">Изменить</button>
@@ -442,11 +502,11 @@ const tabs = [
             <p class="text-xl font-bold text-gray-900">{{ formatPrice(req.amount) }}</p>
             <span :class="['badge', TOPUP_STATUS_COLORS[req.status]]">{{ TOPUP_STATUS_LABELS[req.status] }}</span>
             <div v-if="req.status === 'pending'" class="flex gap-2">
-              <button class="btn-primary text-sm py-1.5 px-3" @click="handleApprove(req)">
-                ✓ Одобрить
+              <button class="btn-primary text-sm py-1.5 px-3 flex items-center gap-1.5" @click="handleApprove(req)">
+                <i class="fa-solid fa-check"></i> Одобрить
               </button>
-              <button class="btn-danger text-sm py-1.5 px-3" @click="handleReject(req)">
-                ✗ Отклонить
+              <button class="btn-danger text-sm py-1.5 px-3 flex items-center gap-1.5" @click="handleReject(req)">
+                <i class="fa-solid fa-xmark"></i> Отклонить
               </button>
             </div>
           </div>
