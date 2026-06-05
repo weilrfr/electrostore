@@ -65,7 +65,7 @@ export const CATEGORIES_DATA: Omit<Category, 'id'>[] = [
 
 // Данные товаров
 export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'> }[] = [
-  // ─── APPLE IPHONE 17 LINEUP ────────────────────────────────────────────────
+  // Линейка Apple iPhone 17
   {
     id: 'iphone_17_promax',
     data: {
@@ -147,7 +147,7 @@ export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt'
     }
   },
 
-  // ─── APPLE IPHONE 16 LINEUP ────────────────────────────────────────────────
+  // Линейка Apple iPhone 16
   {
     id: 'iphone_16_promax',
     data: {
@@ -229,7 +229,7 @@ export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt'
     }
   },
 
-  // ─── APPLE IPHONE 15 LINEUP ────────────────────────────────────────────────
+  // Линейка Apple iPhone 15
   {
     id: 'iphone_15_promax',
     data: {
@@ -311,7 +311,7 @@ export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt'
     }
   },
 
-  // ─── SAMSUNG GALAXY S26 LINEUP ──────────────────────────────────────────────
+  // Линейка Samsung Galaxy S26
   {
     id: 'samsung_s26_ultra',
     data: {
@@ -393,7 +393,7 @@ export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt'
     }
   },
 
-  // ─── SAMSUNG GALAXY S25 LINEUP ──────────────────────────────────────────────
+  // Линейка Samsung Galaxy S25
   {
     id: 'samsung_s25_ultra',
     data: {
@@ -475,7 +475,7 @@ export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt'
     }
   },
 
-  // ─── SAMSUNG GALAXY S24 LINEUP ──────────────────────────────────────────────
+  // Линейка Samsung Galaxy S24
   {
     id: 'samsung_s24_ultra',
     data: {

@@ -20,7 +20,7 @@ import type { Product, Category, ProductFilter } from "@/types";
 const productsRef = collection(db, "products");
 const categoriesRef = collection(db, "categories");
 
-// ─── Получение товаров с фильтрацией ──────────────────────────────────────────
+// Получение товаров с фильтрацией
 
 export const getProducts = async (
   filters: ProductFilter = {},
@@ -153,7 +153,7 @@ export const getProducts = async (
   return { products, lastDoc: last };
 };
 
-// ─── Получение товара по ID ───────────────────────────────────────────────────
+// Получение товара по ID
 
 export const getProductById = async (id: string): Promise<Product | null> => {
   try {
@@ -169,7 +169,7 @@ export const getProductById = async (id: string): Promise<Product | null> => {
   }
 };
 
-// ─── Рекомендованные товары ───────────────────────────────────────────────────
+// Рекомендованные товары
 
 export const getRelatedProducts = async (
   productId: string,
@@ -189,7 +189,7 @@ export const getRelatedProducts = async (
     .slice(0, limitCount);
 };
 
-// ─── Избранные товары ─────────────────────────────────────────────────────────
+// Избранные товары
 
 export const getFeaturedProducts = async (
   limitCount = 8,
@@ -203,14 +203,14 @@ export const getFeaturedProducts = async (
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }) as Product);
 };
 
-// ─── Категории ────────────────────────────────────────────────────────────────
+// Категории
 
 export const getCategories = async (): Promise<Category[]> => {
   const snapshot = await getDocs(categoriesRef);
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }) as Category);
 };
 
-// ─── CRUD для администратора ──────────────────────────────────────────────────
+// CRUD для администратора
 
 export const createProduct = async (
   data: Omit<Product, "id" | "createdAt" | "updatedAt">,

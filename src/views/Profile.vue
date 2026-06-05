@@ -15,7 +15,7 @@ const authStore = useAuthStore();
 const user = computed(() => authStore.currentUser);
 const activeTab = ref((route.query.tab as string) || 'profile');
 
-// Profile form
+// Форма профиля
 const profileForm = ref({
   firstName: user.value?.firstName ?? '',
   lastName: user.value?.lastName ?? '',
@@ -23,12 +23,12 @@ const profileForm = ref({
 });
 const savingProfile = ref(false);
 
-// Wallet
+// Кошелек
 const transactions = ref<WalletTransaction[]>([]);
 const topupAmount = ref<number>(5000);
 const requestingTopup = ref(false);
 
-// Address form
+// Форма адреса
 const showAddressForm = ref(false);
 const newAddr = ref<Omit<Address, 'id' | 'isDefault'>>({
   firstName: '', lastName: '', address: '', city: '',
@@ -137,7 +137,7 @@ const tabs = [
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="page-title mb-8">Личный кабинет</h1>
 
-    <!-- Tabs -->
+    <!-- Вкладки -->
     <div class="flex gap-1 p-1 bg-gray-100 rounded-xl mb-6 w-fit">
       <button
         v-for="tab in tabs"
@@ -152,11 +152,11 @@ const tabs = [
       </button>
     </div>
 
-    <!-- Profile tab -->
+    <!-- Вкладка профиля -->
     <div v-if="activeTab === 'profile'" class="card p-6">
       <h2 class="section-title mb-6">Личные данные</h2>
 
-      <!-- Avatar -->
+      <!-- Аватар -->
       <div class="flex items-center gap-4 mb-6">
         <div class="relative">
           <div class="w-20 h-20 rounded-full bg-primary-100 overflow-hidden flex items-center justify-center">
@@ -199,7 +199,7 @@ const tabs = [
       </button>
     </div>
 
-    <!-- Addresses tab -->
+    <!-- Вкладка адресов -->
     <div v-else-if="activeTab === 'addresses'" class="space-y-4">
       <div
         v-for="addr in user?.addresses"
@@ -259,16 +259,16 @@ const tabs = [
       </Transition>
     </div>
 
-    <!-- Wallet tab -->
+    <!-- Вкладка кошелька -->
     <div v-else-if="activeTab === 'wallet'" class="space-y-6">
-      <!-- Balance card -->
+      <!-- Карточка баланса -->
       <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-6 text-white">
         <p class="text-green-100 text-sm font-medium">Баланс кошелька</p>
         <p class="text-4xl font-bold mt-1">{{ formatPrice(user?.balance ?? 0) }}</p>
         <p class="text-green-100 text-sm mt-2">ТехноМаркет · Внутренний кошелёк</p>
       </div>
 
-      <!-- Request topup -->
+      <!-- Запрос пополнения -->
       <div class="card p-6">
         <h3 class="font-semibold text-gray-900 mb-4">Пополнить баланс</h3>
         <p class="text-sm text-gray-500 mb-4">
@@ -307,7 +307,7 @@ const tabs = [
         </div>
       </div>
 
-      <!-- Transactions -->
+      <!-- Список транзакций -->
       <div class="card p-6">
         <h3 class="font-semibold text-gray-900 mb-4">История операций</h3>
         <div v-if="transactions.length === 0" class="text-center py-8 text-gray-400">

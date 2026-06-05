@@ -1,4 +1,4 @@
-// ─── Форматирование ───────────────────────────────────────────────────────────
+// Форматирование
 
 export const formatPrice = (price: number): string => {
   return new Intl.NumberFormat('ru-RU', {
@@ -29,7 +29,7 @@ export const formatDateTime = (date: Date | { toDate(): Date }): string => {
   }).format(d);
 };
 
-// ─── Статусы заказов ──────────────────────────────────────────────────────────
+// Статусы заказов
 
 export const ORDER_STATUS_LABELS: Record<string, string> = {
   pending: 'Ожидает обработки',
@@ -59,7 +59,7 @@ export const TOPUP_STATUS_COLORS: Record<string, string> = {
   rejected: 'bg-red-100 text-red-800',
 };
 
-// ─── Константы ────────────────────────────────────────────────────────────────
+// Константы
 
 export const SHIPPING_COST = 0;
 export const ITEMS_PER_PAGE = 12;

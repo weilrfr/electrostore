@@ -1,6 +1,6 @@
 import type { Timestamp } from 'firebase/firestore';
 
-// ─── Пользователь ─────────────────────────────────────────────────────────────
+// Пользователь
 
 export interface Address {
   id: string;
@@ -23,14 +23,14 @@ export interface User {
   createdAt: Timestamp;
   role: 'customer' | 'admin';
   addresses: Address[];
-  balance: number; // внутренний кошелёк
+  balance: number; // Внутренний кошелек
   preferences: {
     notifications: boolean;
     newsletter: boolean;
   };
 }
 
-// ─── Товары ───────────────────────────────────────────────────────────────────
+// Товары
 
 export interface Product {
   id: string;
@@ -62,7 +62,7 @@ export interface ProductFilter {
   search?: string;
 }
 
-// ─── Категории ────────────────────────────────────────────────────────────────
+// Категории
 
 export interface Subcategory {
   id: string;
@@ -78,7 +78,7 @@ export interface Category {
   subcategories: Subcategory[];
 }
 
-// ─── Корзина ──────────────────────────────────────────────────────────────────
+// Корзина
 
 export interface CartItem {
   productId: string;
@@ -90,7 +90,7 @@ export interface CartItem {
   stock: number;
 }
 
-// ─── Заказы ───────────────────────────────────────────────────────────────────
+// Заказы
 
 export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 export type PaymentStatus = 'pending' | 'completed' | 'failed';
@@ -120,7 +120,7 @@ export interface Order {
   updatedAt: Timestamp;
 }
 
-// ─── Отзывы ───────────────────────────────────────────────────────────────────
+// Отзывы
 
 export interface Review {
   id: string;
@@ -137,7 +137,7 @@ export interface Review {
   updatedAt: Timestamp;
 }
 
-// ─── Кошелёк ──────────────────────────────────────────────────────────────────
+// Кошелек
 
 export type TransactionType = 'topup' | 'purchase' | 'refund';
 
@@ -165,7 +165,7 @@ export interface TopupRequest {
   updatedAt: Timestamp;
 }
 
-// ─── Утилиты ──────────────────────────────────────────────────────────────────
+// Утилиты
 
 export interface PaginationOptions {
   page: number;

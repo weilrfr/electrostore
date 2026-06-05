@@ -57,10 +57,10 @@ const navLinks = [
 
 <template>
   <header class="bg-white shadow-sm sticky top-0 z-50">
-    <!-- Top bar -->
+    <!-- Верхняя панель -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-4">
-        <!-- Logo -->
+        <!-- Логотип -->
         <RouterLink to="/" class="flex items-center gap-2 shrink-0">
           <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
             <span class="text-white font-bold text-sm">ТМ</span>
@@ -68,7 +68,7 @@ const navLinks = [
           <span class="font-bold text-lg text-gray-900 hidden sm:block">ТехноМаркет</span>
         </RouterLink>
 
-        <!-- Search -->
+        <!-- Поиск -->
         <form class="flex-1 max-w-xl" @submit.prevent="handleSearch">
           <div class="relative">
             <input
@@ -90,9 +90,9 @@ const navLinks = [
           </div>
         </form>
 
-        <!-- Right actions -->
+        <!-- Действия справа -->
         <div class="flex items-center gap-2 shrink-0">
-          <!-- Balance (авторизованные) -->
+          <!-- Баланс (для авторизованных) -->
           <RouterLink
             v-if="isAuthenticated"
             to="/profile?tab=wallet"
@@ -106,7 +106,7 @@ const navLinks = [
             {{ formatPrice(balance) }}
           </RouterLink>
 
-          <!-- Cart -->
+          <!-- Корзина -->
           <RouterLink
             to="/cart"
             class="relative p-2 text-gray-600 hover:text-primary-600 transition-colors"
@@ -124,7 +124,7 @@ const navLinks = [
             </span>
           </RouterLink>
 
-          <!-- User menu -->
+          <!-- Меню пользователя -->
           <div v-if="isAuthenticated" class="relative" ref="userMenuRef">
             <button
               class="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-100 transition-colors"
@@ -138,7 +138,7 @@ const navLinks = [
               </div>
             </button>
 
-            <!-- Dropdown -->
+            <!-- Выпадающий список -->
             <Transition name="fade">
               <div
                 v-if="userMenuOpen"
@@ -180,7 +180,7 @@ const navLinks = [
             </RouterLink>
           </div>
 
-          <!-- Mobile menu btn -->
+          <!-- Кнопка мобильного меню -->
           <button
             class="sm:hidden p-2 text-gray-600"
             @click="mobileMenuOpen = !mobileMenuOpen"
@@ -194,7 +194,7 @@ const navLinks = [
       </div>
     </div>
 
-    <!-- Navigation bar -->
+    <!-- Панель навигации -->
     <nav class="border-t border-gray-100 hidden sm:block">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ul class="flex items-center gap-6 h-10 text-sm">
@@ -211,7 +211,7 @@ const navLinks = [
       </div>
     </nav>
 
-    <!-- Mobile menu -->
+    <!-- Мобильное меню -->
     <Transition name="slide-down">
       <div v-if="mobileMenuOpen" class="sm:hidden border-t border-gray-100 bg-white">
         <ul class="px-4 py-2 space-y-1">

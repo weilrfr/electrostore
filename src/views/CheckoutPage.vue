@@ -88,10 +88,10 @@ const placeOrder = async (): Promise<void> => {
     <h1 class="page-title mb-8">Оформление заказа</h1>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Left: Delivery + Payment -->
+      <!-- Слева: Доставка и оплата -->
       <div class="lg:col-span-2 space-y-6">
 
-        <!-- Delivery address -->
+        <!-- Адрес доставки -->
         <div class="card p-6">
           <h2 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <i class="fa-solid fa-box text-primary-600"></i> Адрес доставки
@@ -157,7 +157,7 @@ const placeOrder = async (): Promise<void> => {
           </Transition>
         </div>
 
-        <!-- Payment method -->
+        <!-- Способ оплаты -->
         <div class="card p-6">
           <h2 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <i class="fa-solid fa-credit-card text-primary-600"></i> Способ оплаты
@@ -182,7 +182,7 @@ const placeOrder = async (): Promise<void> => {
         </div>
       </div>
 
-      <!-- Right: Order summary -->
+      <!-- Справа: Детали заказа -->
       <div>
         <div class="card p-6 sticky top-20">
           <h2 class="font-semibold text-gray-900 mb-4">Ваш заказ</h2>

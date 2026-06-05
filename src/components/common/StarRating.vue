@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  rating: number;   // 0–5
+  rating: number;   // Оценка от 0 до 5
   count?: number;
   size?: 'sm' | 'md';
   interactive?: boolean;

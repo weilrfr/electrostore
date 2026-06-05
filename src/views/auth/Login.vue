@@ -39,7 +39,7 @@ const handleLogin = async (): Promise<void> => {
 <template>
   <div class="min-h-screen flex items-center justify-center px-4 bg-gray-50">
     <div class="w-full max-w-md">
-      <!-- Logo -->
+      <!-- Логотип -->
       <div class="text-center mb-8">
         <div class="w-14 h-14 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <span class="text-white font-bold text-xl">ТМ</span>
@@ -49,7 +49,7 @@ const handleLogin = async (): Promise<void> => {
       </div>
 
       <div class="card p-8">
-        <!-- Error -->
+        <!-- Ошибка авторизации -->
         <div v-if="error" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
           {{ error }}
         </div>

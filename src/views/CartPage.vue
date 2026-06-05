@@ -18,7 +18,7 @@ const total = computed(() => subtotal.value + shipping.value);
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="page-title mb-8">Корзина</h1>
 
-    <!-- Empty cart -->
+    <!-- Пустая корзина -->
     <div v-if="cartStore.items.length === 0" class="text-center py-20">
       <div class="text-7xl mb-4 text-gray-300">
         <i class="fa-solid fa-cart-shopping"></i>
@@ -29,7 +29,7 @@ const total = computed(() => subtotal.value + shipping.value);
     </div>
 
     <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Items -->
+      <!-- Список товаров -->
       <div class="lg:col-span-2">
         <div class="card p-4 sm:p-6">
           <div class="flex items-center justify-between mb-4">
@@ -51,7 +51,7 @@ const total = computed(() => subtotal.value + shipping.value);
         </div>
       </div>
 
-      <!-- Summary -->
+      <!-- Детали заказа -->
       <div>
         <div class="card p-6 sticky top-20">
           <h2 class="font-semibold text-gray-900 mb-4">Итого</h2>

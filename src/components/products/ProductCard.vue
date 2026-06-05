@@ -43,7 +43,7 @@ const renderStars = (rating: number): boolean[] => {
 
 <template>
   <div class="card flex flex-col group hover:shadow-md transition-shadow">
-    <!-- Image -->
+    <!-- Изображение товара -->
     <RouterLink :to="`/product/${product.id}`" class="block relative overflow-hidden rounded-t-xl">
       <img
         :src="product.images[0] || '/placeholder.jpg'"
@@ -51,7 +51,7 @@ const renderStars = (rating: number): boolean[] => {
         class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         loading="lazy"
       />
-      <!-- Badges -->
+      <!-- Бейджи -->
       <div class="absolute top-2 left-2 flex flex-col gap-1">
         <span v-if="hasDiscount" class="badge bg-red-500 text-white">
           -{{ discountPercent }}%
@@ -60,7 +60,7 @@ const renderStars = (rating: number): boolean[] => {
           Топ продаж
         </span>
       </div>
-      <!-- Out of stock -->
+      <!-- Нет в наличии -->
       <div
         v-if="product.stock === 0"
         class="absolute inset-0 bg-black/40 flex items-center justify-center"
@@ -69,16 +69,16 @@ const renderStars = (rating: number): boolean[] => {
       </div>
     </RouterLink>
 
-    <!-- Content -->
+    <!-- Контент -->
     <div class="p-4 flex flex-col flex-1">
-      <!-- Name -->
+      <!-- Название -->
       <RouterLink :to="`/product/${product.id}`">
         <h3 class="text-sm font-medium text-gray-900 line-clamp-2 hover:text-primary-600 transition-colors mb-2">
           {{ product.name }}
         </h3>
       </RouterLink>
 
-      <!-- Rating -->
+      <!-- Рейтинг -->
       <div class="flex items-center gap-1 mb-3">
         <div class="flex">
           <svg
@@ -95,7 +95,7 @@ const renderStars = (rating: number): boolean[] => {
         <span class="text-xs text-gray-500">({{ product.reviews }})</span>
       </div>
 
-      <!-- Price -->
+      <!-- Цена -->
       <div class="mt-auto">
         <div class="flex items-end gap-2 mb-3">
           <span class="text-lg font-bold text-gray-900">{{ formatPrice(displayPrice) }}</span>
@@ -104,7 +104,7 @@ const renderStars = (rating: number): boolean[] => {
           </span>
         </div>
 
-        <!-- Add to cart -->
+        <!-- Кнопка добавления в корзину -->
         <button
           class="btn-primary w-full text-sm"
           :disabled="product.stock === 0"

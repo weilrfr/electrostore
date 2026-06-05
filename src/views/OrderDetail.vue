@@ -75,7 +75,7 @@ const stepIndex = (status: string): number => steps.indexOf(status);
         </div>
       </div>
 
-      <!-- Progress tracker -->
+      <!-- Трекер выполнения заказа -->
       <div v-if="order.status !== 'cancelled'" class="card p-6 mb-6">
         <div class="flex items-center">
           <template v-for="(step, i) in steps" :key="step">
@@ -103,7 +103,7 @@ const stepIndex = (status: string): number => steps.indexOf(status);
         </p>
       </div>
 
-      <!-- Items -->
+      <!-- Список товаров -->
       <div class="card p-6 mb-6">
         <h2 class="font-semibold text-gray-900 mb-4">Товары</h2>
         <div class="space-y-4">
@@ -120,7 +120,7 @@ const stepIndex = (status: string): number => steps.indexOf(status);
         </div>
       </div>
 
-      <!-- Summary + Address -->
+      <!-- Сводка и адрес доставки -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div class="card p-6">
           <h2 class="font-semibold text-gray-900 mb-3">Итого</h2>

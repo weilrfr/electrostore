@@ -27,7 +27,7 @@ const links = {
   <footer class="bg-gray-900 text-gray-300 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Brand -->
+        <!-- Описание бренда -->
         <div>
           <div class="flex items-center gap-2 mb-4">
             <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
@@ -48,7 +48,7 @@ const links = {
           </div>
         </div>
 
-        <!-- Catalog -->
+        <!-- Каталог -->
         <div>
           <h4 class="text-white font-semibold mb-4">Каталог</h4>
           <ul class="space-y-2">
@@ -60,7 +60,7 @@ const links = {
           </ul>
         </div>
 
-        <!-- Info -->
+        <!-- Информация -->
         <div>
           <h4 class="text-white font-semibold mb-4">Информация</h4>
           <ul class="space-y-2">
@@ -72,7 +72,7 @@ const links = {
           </ul>
         </div>
 
-        <!-- Account -->
+        <!-- Личный кабинет -->
         <div>
           <h4 class="text-white font-semibold mb-4">Личный кабинет</h4>
           <ul class="space-y-2">

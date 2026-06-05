@@ -15,7 +15,7 @@ import type { Order, OrderStatus, CartItem, Address } from '@/types';
 
 const ordersRef = collection(db, 'orders');
 
-// ─── Генерация номера заказа ──────────────────────────────────────────────────
+// Генерация номера заказа
 
 const generateOrderNumber = (): string => {
   const year = new Date().getFullYear();
@@ -23,7 +23,7 @@ const generateOrderNumber = (): string => {
   return `ORD-${year}-${random}`;
 };
 
-// ─── Создание заказа (списание с кошелька) ────────────────────────────────────
+// Создание заказа (списание с кошелька)
 
 export interface CreateOrderData {
   userId: string;
@@ -91,7 +91,7 @@ export const createOrder = async (data: CreateOrderData): Promise<string> => {
   return orderId;
 };
 
-// ─── Получение заказа по ID ───────────────────────────────────────────────────
+// Получение заказа по ID
 
 export const getOrderById = async (orderId: string): Promise<Order | null> => {
   const snap = await getDoc(doc(db, 'orders', orderId));
@@ -99,7 +99,7 @@ export const getOrderById = async (orderId: string): Promise<Order | null> => {
   return { id: snap.id, ...snap.data() } as Order;
 };
 
-// ─── Заказы пользователя ──────────────────────────────────────────────────────
+// Заказы пользователя
 
 export const getUserOrders = async (userId: string): Promise<Order[]> => {
   const q = query(ordersRef, where('userId', '==', userId), orderBy('createdAt', 'desc'));
@@ -107,7 +107,7 @@ export const getUserOrders = async (userId: string): Promise<Order[]> => {
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Order));
 };
 
-// ─── Все заказы (для администратора) ──────────────────────────────────────────
+// Все заказы (для администратора)
 
 export const getAllOrders = async (): Promise<Order[]> => {
   const q = query(ordersRef, orderBy('createdAt', 'desc'));
@@ -115,7 +115,7 @@ export const getAllOrders = async (): Promise<Order[]> => {
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Order));
 };
 
-// ─── Обновление статуса заказа (администратор) ───────────────────────────────
+// Обновление статуса заказа (для администратора)
 
 export const updateOrderStatus = async (
   orderId: string,
@@ -127,7 +127,7 @@ export const updateOrderStatus = async (
   await updateDoc(doc(db, 'orders', orderId), updates);
 };
 
-// ─── Отмена заказа (возврат средств) ─────────────────────────────────────────
+// Отмена заказа и возврат средств
 
 export const cancelOrder = async (orderId: string, userId: string): Promise<void> => {
   const orderRef = doc(db, 'orders', orderId);

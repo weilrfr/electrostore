@@ -12,18 +12,18 @@ import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
 const activeTab = ref('dashboard');
 
-// ─── State ────────────────────────────────────────────────────────────────────
+// Состояние
 const orders = ref<Order[]>([]);
 const topupRequests = ref<TopupRequest[]>([]);
 const products = ref<Product[]>([]);
 const usersCount = ref(0);
 const loading = ref(true);
 
-// Seeding state
+// Состояние загрузки данных
 const seeding = ref(false);
 const seedProgress = ref('');
 
-// Product form
+// Форма товара
 const showProductForm = ref(false);
 const editingProduct = ref<Product | null>(null);
 const productForm = ref({
@@ -84,14 +84,14 @@ const handleSeed = async (): Promise<void> => {
   }
 };
 
-// ─── Dashboard stats ──────────────────────────────────────────────────────────
+// Статистика панели управления
 const totalRevenue = computed(() =>
   orders.value.filter((o) => o.paymentStatus === 'completed').reduce((s, o) => s + o.total, 0),
 );
 const pendingOrders = computed(() => orders.value.filter((o) => o.status === 'pending').length);
 const pendingTopups = computed(() => topupRequests.value.filter((r) => r.status === 'pending').length);
 
-// ─── Orders ───────────────────────────────────────────────────────────────────
+// Управление заказами
 const orderFilter = ref<string>('all');
 const filteredOrders = computed(() =>
   orderFilter.value === 'all' ? orders.value : orders.value.filter((o) => o.status === orderFilter.value),
@@ -106,7 +106,7 @@ const changeStatus = async (orderId: string, status: OrderStatus): Promise<void>
   trackingNumber.value = '';
 };
 
-// ─── Wallet requests ──────────────────────────────────────────────────────────
+// Заявки кошелька
 const handleApprove = async (req: TopupRequest): Promise<void> => {
   await approveTopupRequest(req.id, req.userId, req.amount);
   req.status = 'approved';
@@ -119,7 +119,7 @@ const handleReject = async (req: TopupRequest): Promise<void> => {
   toast.info('Заявка отклонена');
 };
 
-// ─── Products ─────────────────────────────────────────────────────────────────
+// Управление товарами
 const startEditProduct = (p: Product): void => {
   editingProduct.value = p;
   productForm.value = {
@@ -231,7 +231,7 @@ const tabs = computed(() => [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="page-title mb-6">Панель администратора</h1>
 
-    <!-- Tabs -->
+    <!-- Вкладки -->
     <div class="flex gap-1 p-1 bg-gray-100 rounded-xl mb-6 overflow-x-auto">
       <button
         v-for="tab in tabs"
@@ -251,7 +251,7 @@ const tabs = computed(() => [
 
     <template v-else>
 
-      <!-- Dashboard -->
+      <!-- Дашборд -->
       <div v-if="activeTab === 'dashboard'" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="card p-5">
           <p class="text-sm text-gray-500">Всего заказов</p>
@@ -270,7 +270,7 @@ const tabs = computed(() => [
           <p class="text-3xl font-bold text-yellow-600 mt-1">{{ pendingTopups }}</p>
         </div>
 
-        <!-- Seeding Widget -->
+        <!-- Панель импорта демо-данных -->
         <div class="card p-6 col-span-2 lg:col-span-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div class="flex-1">
             <h3 class="font-bold text-indigo-900 text-lg flex items-center gap-2">
@@ -297,7 +297,7 @@ const tabs = computed(() => [
           </div>
         </div>
 
-        <!-- Recent orders -->
+        <!-- Последние заказы -->
         <div class="card p-5 col-span-2 lg:col-span-4">
           <h2 class="font-semibold text-gray-900 mb-4">Последние заказы</h2>
           <div class="space-y-3">
@@ -314,7 +314,7 @@ const tabs = computed(() => [
         </div>
       </div>
 
-      <!-- Orders -->
+      <!-- Заказы -->
       <div v-else-if="activeTab === 'orders'">
         <div class="flex gap-2 flex-wrap mb-4">
           <button
@@ -338,7 +338,7 @@ const tabs = computed(() => [
               </div>
               <OrderStatusBadge :status="order.status" />
             </div>
-            <!-- Change status -->
+            <!-- Смена статуса -->
             <div v-if="order.status !== 'delivered' && order.status !== 'cancelled'" class="flex gap-2 flex-wrap">
               <input v-if="order.status === 'processing'" v-model="trackingNumber" class="input-field w-48 text-sm" placeholder="Трек-номер (опционально)" />
               <select class="input-field w-auto text-sm" @change="changeStatus(order.id, ($event.target as HTMLSelectElement).value as OrderStatus)">
@@ -350,7 +350,7 @@ const tabs = computed(() => [
         </div>
       </div>
 
-      <!-- Products -->
+      <!-- Товары -->
       <div v-else-if="activeTab === 'products'">
         <div class="flex justify-between mb-4">
           <p class="text-gray-500 text-sm">{{ products.length }} товаров</p>
@@ -359,7 +359,7 @@ const tabs = computed(() => [
           </button>
         </div>
 
-        <!-- Product form -->
+        <!-- Форма товара -->
         <Transition name="fade">
           <div v-if="showProductForm" class="card p-6 mb-6">
             <h3 class="font-semibold mb-4">{{ editingProduct ? 'Редактировать товар' : 'Новый товар' }}</h3>
@@ -411,7 +411,7 @@ const tabs = computed(() => [
                 <label for="featured" class="text-sm font-medium text-gray-700">Рекомендованный товар</label>
               </div>
 
-              <!-- Specs -->
+              <!-- Характеристики -->
               <div class="sm:col-span-2">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Характеристики</label>
                 <div class="flex gap-2 mb-2">
@@ -437,7 +437,7 @@ const tabs = computed(() => [
           </div>
         </Transition>
 
-        <!-- Products table -->
+        <!-- Таблица товаров -->
         <div class="card overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
@@ -482,7 +482,7 @@ const tabs = computed(() => [
         </div>
       </div>
 
-      <!-- Wallet requests -->
+      <!-- Заявки кошелька -->
       <div v-else-if="activeTab === 'wallet'">
         <h2 class="section-title mb-4">Заявки на пополнение баланса</h2>
         <div v-if="topupRequests.length === 0" class="text-center py-10 text-gray-400">

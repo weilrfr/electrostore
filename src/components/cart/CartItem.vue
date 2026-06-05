@@ -29,7 +29,7 @@ const remove = (): void => {
 
 <template>
   <div class="flex items-start gap-4 py-4 border-b border-gray-100 last:border-0">
-    <!-- Image -->
+    <!-- Изображение -->
     <RouterLink :to="`/product/${item.productId}`" class="shrink-0">
       <img
         :src="item.image || '/placeholder.jpg'"
@@ -38,7 +38,7 @@ const remove = (): void => {
       />
     </RouterLink>
 
-    <!-- Info -->
+    <!-- Информация -->
     <div class="flex-1 min-w-0">
       <RouterLink :to="`/product/${item.productId}`">
         <h4 class="text-sm font-medium text-gray-900 line-clamp-2 hover:text-primary-600 transition-colors">
@@ -47,7 +47,7 @@ const remove = (): void => {
       </RouterLink>
       <p class="text-sm text-gray-500 mt-0.5">{{ formatPrice(displayPrice) }} / шт</p>
 
-      <!-- Quantity control -->
+      <!-- Управление количеством -->
       <div class="flex items-center gap-2 mt-3">
         <button
           class="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center
@@ -74,7 +74,7 @@ const remove = (): void => {
       </div>
     </div>
 
-    <!-- Price + delete -->
+    <!-- Цена и удаление -->
     <div class="flex flex-col items-end gap-2 shrink-0">
       <p class="font-semibold text-gray-900">{{ formatPrice(lineTotal) }}</p>
       <button

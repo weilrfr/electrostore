@@ -10,7 +10,7 @@ import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from './firebase';
 import type { User } from '@/types';
 
-// ─── Вход ─────────────────────────────────────────────────────────────────────
+// Вход
 
 export const loginWithEmail = async (
   email: string,
@@ -20,7 +20,7 @@ export const loginWithEmail = async (
   return credential.user;
 };
 
-// ─── Регистрация ──────────────────────────────────────────────────────────────
+// Регистрация
 
 export interface RegisterData {
   email: string;
@@ -54,19 +54,19 @@ export const registerWithEmail = async (data: RegisterData): Promise<FirebaseUse
   return user;
 };
 
-// ─── Выход ────────────────────────────────────────────────────────────────────
+// Выход
 
 export const logout = async (): Promise<void> => {
   await signOut(auth);
 };
 
-// ─── Сброс пароля ─────────────────────────────────────────────────────────────
+// Сброс пароля
 
 export const resetPassword = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
 
-// ─── Получение профиля ────────────────────────────────────────────────────────
+// Получение профиля
 
 export const getUserProfile = async (uid: string): Promise<User | null> => {
   const snap = await getDoc(doc(db, 'users', uid));
@@ -74,7 +74,7 @@ export const getUserProfile = async (uid: string): Promise<User | null> => {
   return { uid, ...snap.data() } as User;
 };
 
-// ─── Слушатель авторизации ────────────────────────────────────────────────────
+// Слушатель авторизации
 
 export const onAuthChange = (
   callback: (user: FirebaseUser | null) => void,
@@ -82,7 +82,7 @@ export const onAuthChange = (
   return onAuthStateChanged(auth, callback);
 };
 
-// ─── Маппинг ошибок Firebase → русский текст ──────────────────────────────────
+// Маппинг ошибок Firebase
 
 export const getAuthErrorMessage = (code: string): string => {
   const messages: Record<string, string> = {

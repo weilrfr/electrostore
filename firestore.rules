@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ─── Вспомогательные функции ──────────────────────────────────────────
+    // Вспомогательные функции
 
     function isAuthenticated() {
       return request.auth != null;
@@ -18,7 +18,7 @@ service cloud.firestore {
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // ─── Пользователи ─────────────────────────────────────────────────────
+    // Пользователи
 
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
@@ -27,13 +27,13 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // ─── Корзины ──────────────────────────────────────────────────────────
+    // Корзины
 
     match /carts/{userId} {
       allow read, write: if isOwner(userId);
     }
 
-    // ─── Товары ───────────────────────────────────────────────────────────
+    // Товары
 
     match /products/{productId} {
       allow read: if true;
@@ -42,14 +42,14 @@ service cloud.firestore {
         (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviews', 'rating']));
     }
 
-    // ─── Категории ────────────────────────────────────────────────────────
+    // Категории
 
     match /categories/{categoryId} {
       allow read: if true;
       allow write: if isAdmin();
     }
 
-    // ─── Заказы ───────────────────────────────────────────────────────────
+    // Заказы
 
     match /orders/{orderId} {
       allow get: if isAuthenticated() &&
@@ -61,7 +61,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // ─── Отзывы ───────────────────────────────────────────────────────────
+    // Отзывы
 
     match /reviews/{reviewId} {
       allow read: if true;
@@ -72,7 +72,7 @@ service cloud.firestore {
         (request.auth.uid == resource.data.userId || isAdmin());
     }
 
-    // ─── Транзакции кошелька ──────────────────────────────────────────────
+    // Транзакции кошелька
 
     match /walletTransactions/{txId} {
       allow read: if isAuthenticated() &&
@@ -82,7 +82,7 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // ─── Заявки на пополнение ─────────────────────────────────────────────
+    // Заявки на пополнение
 
     match /topupRequests/{reqId} {
       allow read: if isAuthenticated() &&

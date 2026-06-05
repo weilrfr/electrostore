@@ -35,7 +35,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <!-- Hero banner -->
+    <!-- Промо-баннер -->
     <section class="bg-gradient-to-r from-primary-700 to-primary-900 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 flex flex-col sm:flex-row items-center gap-8">
         <div class="flex-1">
@@ -60,7 +60,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Categories -->
+    <!-- Список категорий -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h2 class="section-title mb-6">Категории товаров</h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -84,7 +84,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Featured products -->
+    <!-- Рекомендованные товары -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       <div class="flex items-center justify-between mb-6">
         <h2 class="section-title">Популярные товары</h2>
@@ -93,7 +93,7 @@ onMounted(async () => {
         </RouterLink>
       </div>
 
-      <!-- Skeletons -->
+      <!-- Скелетоны при загрузке -->
       <div v-if="productStore.loading && productStore.featuredProducts.length === 0"
         class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         <SkeletonCard v-for="i in 8" :key="i" />
@@ -108,7 +108,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Wallet CTA -->
+    <!-- Блок пополнения баланса -->
     <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center gap-6">
         <div class="text-5xl text-green-100"><i class="fa-solid fa-credit-card"></i></div>

@@ -23,7 +23,7 @@ const pageTitle = computed(() => {
 
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Breadcrumbs -->
+    <!-- Хлебные крошки -->
     <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
       <RouterLink to="/" class="hover:text-primary-600">Главная</RouterLink>
       <span>/</span>

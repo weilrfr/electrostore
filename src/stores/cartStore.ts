@@ -10,7 +10,7 @@ export const useCartStore = defineStore('cart', () => {
   const currentUserId = ref<string | null>(null);
   const isInitialized = ref(false);
 
-  // ─── Computed ──────────────────────────────────────────────────────────────
+  // Вычисляемые свойства
 
   const itemCount = computed(() =>
     items.value.reduce((sum, item) => sum + item.quantity, 0),
@@ -23,7 +23,7 @@ export const useCartStore = defineStore('cart', () => {
     }, 0),
   );
 
-  // ─── Инициализация ────────────────────────────────────────────────────────
+  // Инициализация
 
   const initCart = async (userId: string | null): Promise<void> => {
     // Если userId не изменился — не переинициализируем
@@ -69,7 +69,7 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
-  // ─── Actions ──────────────────────────────────────────────────────────────
+  // Действия
 
   const addItem = (product: Product, quantity = 1): void => {
     const existing = items.value.find((i) => i.productId === product.id);
@@ -114,7 +114,7 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
-  // ─── Helpers ──────────────────────────────────────────────────────────────
+  // Вспомогательные функции
 
   function mergeItems(remote: CartItem[], local: CartItem[]): CartItem[] {
     const map = new Map<string, CartItem>();

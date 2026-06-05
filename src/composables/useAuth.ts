@@ -15,10 +15,8 @@ import {
   type RegisterData,
 } from '@/services/authService';
 
-/**
- * Composable для работы с аутентификацией.
- * Обеспечивает авто-восстановление сессии и типизированные методы.
- */
+// Composable для работы с аутентификацией
+// Обеспечивает авто-восстановление сессии и типизированные методы
 export const useAuth = () => {
   const authStore = useAuthStore();
   const cartStore = useCartStore();
@@ -27,7 +25,7 @@ export const useAuth = () => {
 
   let unsubscribe: (() => void) | null = null;
 
-  // ─── Инициализация слушателя авторизации ──────────────────────────────────
+  // Инициализация слушателя авторизации
 
   const initAuth = (): void => {
     authStore.setLoading(true);
@@ -50,7 +48,7 @@ export const useAuth = () => {
   onMounted(initAuth);
   onUnmounted(stopAuth);
 
-  // ─── Вход ─────────────────────────────────────────────────────────────────
+  // Вход
 
   const login = async (email: string, password: string): Promise<void> => {
     try {
@@ -64,7 +62,7 @@ export const useAuth = () => {
     }
   };
 
-  // ─── Регистрация ──────────────────────────────────────────────────────────
+  // Регистрация
 
   const register = async (data: RegisterData): Promise<void> => {
     try {
@@ -78,7 +76,7 @@ export const useAuth = () => {
     }
   };
 
-  // ─── Выход ────────────────────────────────────────────────────────────────
+  // Выход
 
   const logout = async (): Promise<void> => {
     await firebaseLogout();
@@ -88,7 +86,7 @@ export const useAuth = () => {
     await router.push('/');
   };
 
-  // ─── Сброс пароля ─────────────────────────────────────────────────────────
+  // Сброс пароля
 
   const sendPasswordReset = async (email: string): Promise<void> => {
     try {

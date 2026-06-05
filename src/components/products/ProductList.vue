@@ -52,7 +52,7 @@ const loadMore = (): void => {
 
 <template>
   <div>
-    <!-- Filter bar -->
+    <!-- Панель фильтров -->
     <div class="flex items-center justify-between mb-6 gap-4 flex-wrap">
       <div class="flex items-center gap-2">
         <button
@@ -70,7 +70,7 @@ const loadMore = (): void => {
         </span>
       </div>
 
-      <!-- Sort -->
+      <!-- Сортировка -->
       <select
         v-model="selectedSort"
         class="input-field w-auto text-sm"
@@ -82,10 +82,10 @@ const loadMore = (): void => {
       </select>
     </div>
 
-    <!-- Filter panel -->
+    <!-- Выпадающая панель фильтрации -->
     <Transition name="fade">
       <div v-if="showFilters" class="card p-4 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <!-- Price range -->
+        <!-- Диапазон цен -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Цена (₸)</label>
           <div class="flex items-center gap-2">
@@ -107,7 +107,7 @@ const loadMore = (): void => {
           </div>
         </div>
 
-        <!-- Rating -->
+        <!-- Рейтинг -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Рейтинг от</label>
           <div class="flex items-center gap-2">
@@ -127,7 +127,7 @@ const loadMore = (): void => {
           </div>
         </div>
 
-        <!-- Actions -->
+        <!-- Кнопки управления -->
         <div class="flex items-end gap-2">
           <button class="btn-primary text-sm flex-1" @click="applyFilters">
             Применить
@@ -139,13 +139,13 @@ const loadMore = (): void => {
       </div>
     </Transition>
 
-    <!-- Skeletons -->
+    <!-- Скелетоны -->
     <div v-if="productStore.loading && productStore.products.length === 0"
       class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       <SkeletonCard v-for="i in 8" :key="i" />
     </div>
 
-    <!-- Empty state -->
+    <!-- Пустое состояние -->
     <div
       v-else-if="!productStore.loading && productStore.products.length === 0"
       class="text-center py-16"
@@ -159,7 +159,7 @@ const loadMore = (): void => {
       <button class="btn-primary mt-4 text-sm" @click="resetFilters">Сбросить фильтры</button>
     </div>
 
-    <!-- Products grid -->
+    <!-- Сетка товаров -->
     <div v-else class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       <ProductCard
         v-for="product in productStore.products"
@@ -168,7 +168,7 @@ const loadMore = (): void => {
       />
     </div>
 
-    <!-- Load more -->
+    <!-- Кнопка загрузки дополнительных товаров -->
     <div v-if="productStore.hasMore && productStore.products.length > 0" class="mt-8 text-center">
       <button
         class="btn-secondary"

@@ -17,7 +17,7 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import { db, storage } from './firebase';
 import type { User, Address, WalletTransaction, TopupRequest } from '@/types';
 
-// ─── Профиль пользователя ─────────────────────────────────────────────────────
+// Профиль пользователя
 
 export const getUserById = async (userId: string): Promise<User | null> => {
   const snap = await getDoc(doc(db, 'users', userId));
@@ -32,7 +32,7 @@ export const updateUserProfile = async (
   await updateDoc(doc(db, 'users', userId), data);
 };
 
-// ─── Загрузка аватара ─────────────────────────────────────────────────────────
+// Загрузка аватара
 
 export const uploadAvatar = async (userId: string, file: File): Promise<string> => {
   const avatarRef = storageRef(storage, `avatars/${userId}`);
@@ -42,7 +42,7 @@ export const uploadAvatar = async (userId: string, file: File): Promise<string> 
   return url;
 };
 
-// ─── Адреса ───────────────────────────────────────────────────────────────────
+// Адреса
 
 export const addAddress = async (userId: string, address: Address): Promise<void> => {
   const userRef = doc(db, 'users', userId);
@@ -82,7 +82,7 @@ export const setDefaultAddress = async (userId: string, addressId: string): Prom
   await updateDoc(userRef, { addresses: newAddresses });
 };
 
-// ─── Кошелёк ──────────────────────────────────────────────────────────────────
+// Кошелек
 
 export const getWalletTransactions = async (userId: string): Promise<WalletTransaction[]> => {
   const q = query(
@@ -94,7 +94,7 @@ export const getWalletTransactions = async (userId: string): Promise<WalletTrans
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as WalletTransaction));
 };
 
-// ─── Запросы на пополнение ────────────────────────────────────────────────────
+// Запросы на пополнение
 
 export const createTopupRequest = async (
   userId: string,
@@ -153,7 +153,7 @@ export const rejectTopupRequest = async (requestId: string): Promise<void> => {
   });
 };
 
-// ─── Статистика для дашборда ──────────────────────────────────────────────────
+// Статистика для дашборда
 
 export const getAllUsers = async (): Promise<User[]> => {
   const snapshot = await getDocs(collection(db, 'users'));

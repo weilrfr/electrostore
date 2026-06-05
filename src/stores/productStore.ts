@@ -13,13 +13,13 @@ export const useProductStore = defineStore('products', () => {
   const filters = ref<ProductFilter>({});
   let lastDoc: QueryDocumentSnapshot | null = null;
 
-  // ─── Computed ──────────────────────────────────────────────────────────────
+  // Вычисляемые свойства
 
   const categoryMap = computed<Record<string, Category>>(() =>
     Object.fromEntries(categories.value.map((c) => [c.slug, c])),
   );
 
-  // ─── Actions ───────────────────────────────────────────────────────────────
+  // Действия
 
   const fetchProducts = async (newFilters?: ProductFilter, reset = true): Promise<void> => {
     if (newFilters) filters.value = newFilters;
@@ -48,7 +48,7 @@ export const useProductStore = defineStore('products', () => {
   };
 
   const fetchCategories = async (): Promise<void> => {
-    if (categories.value.length > 0) return; // кэш
+    if (categories.value.length > 0) return; // Кэш
     categories.value = await getCategories();
   };
 

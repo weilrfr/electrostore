@@ -49,7 +49,7 @@ onMounted(async () => {
           <OrderStatusBadge :status="order.status" />
         </div>
 
-        <!-- Items preview -->
+        <!-- Предпросмотр товаров -->
         <div class="flex items-center gap-2 mt-3">
           <img
             v-for="item in order.items.slice(0, 3)"
