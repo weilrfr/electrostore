@@ -15,22 +15,6 @@ onMounted(async () => {
   ]);
 });
 
-// const heroSlides = [
-//   {
-//     title: 'Смартфоны нового поколения',
-//     subtitle: 'Флагманские модели по лучшим ценам',
-//     color: 'from-primary-700 to-primary-900',
-//     icon: 'fa-solid fa-mobile-screen-button',
-//     link: '/shop?category=smartphones',
-//   },
-//   {
-//     title: 'Ноутбуки для работы и учёбы',
-//     subtitle: 'Производительность без компромиссов',
-//     color: 'from-purple-700 to-purple-900',
-//     icon: 'fa-solid fa-laptop',
-//     link: '/shop?category=laptops',
-//   },
-// ];
 </script>
 
 <template>

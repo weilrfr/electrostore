@@ -5,7 +5,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior: () => ({ top: 0 }),
   routes: [
-    // ─── Публичные маршруты ────────────────────────────────────────────────
+    // Публичные маршруты 
     {
       path: '/',
       name: 'home',
@@ -39,7 +39,7 @@ const router = createRouter({
       meta: { guestOnly: true },
     },
 
-    // ─── Защищённые маршруты (требуется авторизация) ──────────────────────
+    //  Защищённые маршруты (требуется авторизация) 
     {
       path: '/checkout',
       name: 'checkout',
@@ -65,7 +65,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
 
-    // ─── Только для администратора ────────────────────────────────────────
+    //  Только для администратора 
     {
       path: '/admin',
       name: 'admin',
@@ -73,7 +73,7 @@ const router = createRouter({
       meta: { requiresAuth: true, requiresAdmin: true },
     },
 
-    // ─── 404 ──────────────────────────────────────────────────────────────
+    // 404 
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
@@ -82,7 +82,7 @@ const router = createRouter({
   ],
 });
 
-// ─── Навигационные guards ─────────────────────────────────────────────────────
+// Навигационные guards 
 
 router.beforeEach(async (to) => {
   const authStore = useAuthStore();

@@ -18,14 +18,14 @@
 
 ## Функциональность
 
-- 🛍️ Каталог товаров с фильтрами, сортировкой, поиском
-- 🛒 Корзина (localStorage для гостей)
-- 💳 **Внутренний кошелёк** — пополнение через заявку, оплата заказов с баланса
-- 👤 Профиль, адреса, история транзакций
-- 📦 Заказы с трекингом статусов и возвратом средств
-- ⭐ Отзывы с рейтингом
-- 🔐 Регистрация / Вход / Сброс пароля
-- 🛠️ Панель администратора: управление товарами, заказами, одобрение пополнений
+- Каталог товаров с фильтрами, сортировкой, поиском
+- Корзина (localStorage для гостей)
+- **Внутренний кошелёк** — пополнение через заявку, оплата заказов с баланса
+- Профиль, адреса, история транзакций
+- Заказы с трекингом статусов и возвратом средств
+- Отзывы с рейтингом
+- Регистрация / Вход / Сброс пароля
+- Панель администратора: управление товарами, заказами, одобрение пополнений
 
 ---
 
@@ -47,38 +47,22 @@ npm install
 4. Отключите Google Analytics (не обязательно для диплома)
 5. Нажмите **"Создать проект"**
 
-### 3. Подключить веб-приложение
+### 3. Настроить конфигурацию Firebase в проекте
 
 1. В консоли Firebase → **"Обзор проекта"** → иконка **`</>`** (Веб)
 2. Зарегистрируйте приложение (название: `technomarket-web`)
-3. Скопируйте конфиг:
+3. Скопируйте объект конфигурации `firebaseConfig`.
+4. Откройте файл `src/services/firebase.ts` и замените значения по умолчанию в объекте `firebaseConfig` на ваши скопированные данные:
 
-```js
+```typescript
 const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
+  apiKey: "ВАШ_API_KEY",
+  authDomain: "ВАШ_AUTH_DOMAIN",
+  projectId: "ВАШ_PROJECT_ID",
+  storageBucket: "ВАШ_STORAGE_BUCKET",
+  messagingSenderId: "ВАШ_MESSAGING_SENDER_ID",
+  appId: "ВАШ_APP_ID"
 };
-```
-
-### 4. Настроить переменные окружения
-
-```bash
-cp .env.example .env.local
-```
-
-Вставьте значения из Firebase конфига в `.env.local`:
-
-```env
-VITE_FIREBASE_API_KEY=AIza...
-VITE_FIREBASE_AUTH_DOMAIN=technomarket-diploma.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=technomarket-diploma
-VITE_FIREBASE_STORAGE_BUCKET=technomarket-diploma.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
-VITE_FIREBASE_APP_ID=1:123456789:web:abc123
 ```
 
 ### 5. Включить Firebase сервисы
@@ -98,7 +82,7 @@ VITE_FIREBASE_APP_ID=1:123456789:web:abc123
 
 ### 6. Развернуть правила безопасности Firestore
 
-⚠️ **ВАЖНО!** Без этого шага заявки на пополнение и другие операции не будут работать.
+**ВАЖНО!** Без этого шага заявки на пополнение и другие операции не будут работать.
 
 ```bash
 npm install -g firebase-tools
@@ -107,8 +91,6 @@ firebase init firestore
 # Когда спросит файл правил — укажите: firestore.rules
 firebase deploy --only firestore:rules
 ```
-
-**Подробная инструкция:** смотрите [`FIREBASE_SETUP.md`](./FIREBASE_SETUP.md)
 
 ### 7. Запустить проект
 

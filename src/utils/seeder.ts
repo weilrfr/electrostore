@@ -65,493 +65,295 @@ export const CATEGORIES_DATA: Omit<Category, 'id'>[] = [
 
 // Данные товаров
 export const PRODUCTS_DATA: { id: string; data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'> }[] = [
-  // Линейка Apple iPhone 17
+  // Аксессуары
   {
-    id: 'iphone_17_promax',
+    id: 'accessory_airpods_pro_2',
     data: {
-      name: 'Apple iPhone 17 Pro Max 256GB',
-      description: 'Новейший ультрафлагман от Apple с инновационным подэкранным Face ID, титановым корпусом четвертого поколения, чипом A19 Pro и революционной камерой 48 Мп со сверхдлинным оптическим зумом.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 890000,
-      discountPrice: 849990,
-      stock: 10,
-      rating: 5.0,
-      reviews: 5,
-      images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80'],
+      name: 'Беспроводные наушники Apple AirPods Pro 2 (USB-C)',
+      description: 'Легендарные наушники с активным шумоподавлением в два раза эффективнее предыдущего поколения, адаптивным аудио и универсальным кейсом с зарядкой USB-C.',
+      category: 'accessories',
+      subcategory: 'headphones',
+      price: 135000,
+      discountPrice: 124990,
+      stock: 30,
+      rating: 4.9,
+      reviews: 142,
+      images: ['https://images.unsplash.com/photo-1588449668338-d1517824ee76?w=600&auto=format&fit=crop&q=80'],
       specifications: {
-        'Экран': '6.9" LTPO Super Retina XDR OLED, 120 Гц',
-        'Процессор': 'Apple A19 Pro (3-нм)',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': 'Тройная: 48 Мп + 48 Мп + 48 Мп с 10x оптическим зумом',
-        'Материал корпуса': 'Титановый сплав Grade 5',
-        'Разъем': 'USB-C (USB 4, до 40 Гбит/с)'
+        'Тип': 'Внутриканальные беспроводные TWS',
+        'Шумоподавление': 'Активное (ANC) + адаптивный режим прозрачности',
+        'Чип': 'Apple H2 в наушниках, Apple U1 в зарядном кейсе',
+        'Время работы от аккумулятора': 'До 6 часов (до 30 часов с кейсом)',
+        'Влагозащита': 'IP54 (наушники и кейс)'
       },
-      sku: 'AAPL-IP17PM-256-TI',
-      tags: ['apple', 'iphone', 'iphone 17', 'флагман', 'титан'],
+      sku: 'AAPL-AP-PRO2-USBC',
+      tags: ['apple', 'airpods', 'наушники', 'tws', 'шумоподавление'],
       featured: true
     }
   },
   {
-    id: 'iphone_17_pro',
+    id: 'accessory_sony_wh1000xm5',
     data: {
-      name: 'Apple iPhone 17 Pro 256GB',
-      description: 'Профессиональный смартфон Apple в компактном корпусе. Оснащен мощным чипом A19 Pro, тройной камерой 48 Мп и ярким экраном с поддержкой ProMotion.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 790000,
+      name: 'Беспроводные наушники Sony WH-1000XM5 Black',
+      description: 'Полноразмерные наушники премиум-класса с лидирующей на рынке технологией активного шумоподавления, исключительным качеством звука высокого разрешения и смарт-функциями.',
+      category: 'accessories',
+      subcategory: 'headphones',
+      price: 195000,
+      stock: 12,
+      rating: 5.0,
+      reviews: 48,
+      images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Тип': 'Полноразмерные закрытые беспроводные',
+        'Шумоподавление': 'Автоматически оптимизируемое активное шумоподавление (ANC)',
+        'Диаметр мембраны': '30 мм',
+        'Аудиокодеки': 'SBC, AAC, LDAC (Hi-Res Audio Wireless)',
+        'Время работы': 'До 30 часов (с ANC), до 40 часов (без ANC)'
+      },
+      sku: 'SONY-WH1000XM5-BLK',
+      tags: ['sony', 'наушники', 'bluetooth', 'anc', 'hi-res'],
+      featured: true
+    }
+  },
+  {
+    id: 'accessory_jbl_tune_520bt',
+    data: {
+      name: 'Беспроводные наушники JBL Tune 520BT Black',
+      description: 'Накладные наушники с фирменной технологией чистого баса JBL Pure Bass, быстрой зарядкой и впечатляющим временем работы до 57 часов.',
+      category: 'accessories',
+      subcategory: 'headphones',
+      price: 29000,
+      discountPrice: 24990,
+      stock: 50,
+      rating: 4.6,
+      reviews: 112,
+      images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Тип': 'Накладные беспроводные',
+        'Технология звука': 'JBL Pure Bass Sound',
+        'Версия Bluetooth': '5.3',
+        'Время работы': 'До 57 часов',
+        'Быстрая зарядка': '5 минут зарядки дают 3 часа воспроизведения'
+      },
+      sku: 'JBL-T520BT-BLK',
+      tags: ['jbl', 'наушники', 'басы', 'бюджетные'],
+      featured: false
+    }
+  },
+  {
+    id: 'accessory_anker_powercore',
+    data: {
+      name: 'Повербанк Anker PowerCore Essential 20000mAh',
+      description: 'Внешний аккумулятор большой емкости от мирового лидера. Поддерживает технологии быстрой зарядки PowerIQ и VoltageBoost для максимально безопасного процесса.',
+      category: 'accessories',
+      subcategory: 'powerbanks',
+      price: 25000,
+      stock: 25,
+      rating: 4.8,
+      reviews: 67,
+      images: ['https://images.unsplash.com/photo-1609592424109-dd77d61d15c8?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Емкость': '20 000 мАч / 74 Втч',
+        'Выходные порты': '2 x USB-A',
+        'Входные порты': 'USB-C, Micro-USB',
+        'Максимальная мощность': '15 Вт',
+        'Материал корпуса': 'Износостойкий структурированный пластик'
+      },
+      sku: 'ANKR-PC-20K-BLK',
+      tags: ['anker', 'повербанк', 'зарядка', 'аккумулятор'],
+      featured: false
+    }
+  },
+  {
+    id: 'accessory_xiaomi_powerbank_3',
+    data: {
+      name: 'Повербанк Xiaomi Mi Power Bank 3 10000mAh',
+      description: 'Компактный внешний аккумулятор в стильном алюминиевом корпусе. Поддерживает двустороннюю быструю зарядку мощностью до 18 Вт.',
+      category: 'accessories',
+      subcategory: 'powerbanks',
+      price: 13000,
+      discountPrice: 11500,
+      stock: 60,
+      rating: 4.7,
+      reviews: 195,
+      images: ['https://images.unsplash.com/photo-1609592424109-dd77d61d15c8?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Емкость': '10 000 мАч',
+        'Материал корпуса': 'Анодированный алюминий',
+        'Порты': 'Выход: USB-A, USB-C | Вход: Micro-USB, USB-C',
+        'Максимальная мощность': '18 Вт (двусторонняя быстрая зарядка)'
+      },
+      sku: 'XMI-PB3-10K-SLV',
+      tags: ['xiaomi', 'повербанк', 'алюминий', 'быстрая зарядка'],
+      featured: false
+    }
+  },
+  {
+    id: 'accessory_baseus_bipow',
+    data: {
+      name: 'Повербанк Baseus Bipow 20000mAh 20W',
+      description: 'Внешний аккумулятор емкостью 20000 мАч с поддержкой Power Delivery (PD) 20 Вт и удобным светодиодным дисплеем для отображения уровня заряда.',
+      category: 'accessories',
+      subcategory: 'powerbanks',
+      price: 18000,
+      stock: 45,
+      rating: 4.6,
+      reviews: 84,
+      images: ['https://images.unsplash.com/photo-1609592424109-dd77d61d15c8?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Емкость': '20 000 мАч',
+        'Максимальная выходная мощность': '20 Вт',
+        'Поддерживаемые протоколы': 'Quick Charge 3.0, Power Delivery 3.0, FCP, AFC',
+        'Экран': 'Цифровой LED-дисплей (процент заряда)'
+      },
+      sku: 'BSUS-BIPW-20K-20W',
+      tags: ['baseus', 'повербанк', 'power-delivery', 'дисплей'],
+      featured: false
+    }
+  },
+  {
+    id: 'accessory_logitech_mx_master_3s',
+    data: {
+      name: 'Беспроводная мышь Logitech MX Master 3S',
+      description: 'Эталонная эргономичная мышь для программистов, дизайнеров и создателей контента. Оснащена электромагнитным колесиком прокрутки MagSpeed и бесшумными кликами.',
+      category: 'accessories',
+      subcategory: 'input',
+      price: 69000,
+      discountPrice: 64990,
+      stock: 15,
+      rating: 5.0,
+      reviews: 56,
+      images: ['https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Тип подключения': 'Bluetooth или беспроводной USB-приемник Logi Bolt',
+        'Разрешение сенсора': '8000 DPI (работает даже на стекле)',
+        'Количество кнопок': '7 + колесико горизонтальной прокрутки',
+        'Эргономика': 'Для правой руки, упор для большого пальца',
+        'Аккумулятор': 'До 70 дней работы на одном заряде'
+      },
+      sku: 'LOGI-MXM3S-GRY',
+      tags: ['logitech', 'мышь', 'эргономика', 'mx master', 'премиум'],
+      featured: true
+    }
+  },
+  {
+    id: 'accessory_razer_deathadder',
+    data: {
+      name: 'Игровая мышь Razer DeathAdder Essential Black',
+      description: 'Легендарная игровая мышь с эргономичной формой, высокоточным оптическим сенсором 6400 DPI и сверхнадежными переключателями.',
+      category: 'accessories',
+      subcategory: 'input',
+      price: 18000,
+      discountPrice: 15990,
+      stock: 40,
+      rating: 4.7,
+      reviews: 120,
+      images: ['https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Тип подключения': 'Проводное (USB, длина кабеля 1.8 м)',
+        'Сенсор': 'Оптический, 6400 DPI',
+        'Количество кнопок': '5 программируемых кнопок Hyperesponse',
+        'Подсветка': 'Одноцветная зеленая'
+      },
+      sku: 'RAZR-DA-ESS-BLK',
+      tags: ['razer', 'мышь', 'гейминг', 'классика'],
+      featured: false
+    }
+  },
+  {
+    id: 'accessory_logitech_mx_keys',
+    data: {
+      name: 'Беспроводная клавиатура Logitech MX Keys S',
+      description: 'Премиальная низкопрофильная клавиатура со сферическими углублениями клавиш Perfect Stroke, автоматической подсветкой и поддержкой нескольких устройств.',
+      category: 'accessories',
+      subcategory: 'input',
+      price: 79000,
+      stock: 10,
+      rating: 4.9,
+      reviews: 38,
+      images: ['https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop&q=80'],
+      specifications: {
+        'Тип': 'Низкопрофильная мембранная',
+        'Раскладка': 'Полноразмерная с цифровым блоком',
+        'Подключение': 'Bluetooth / Logi Bolt / подключение до 3-х устройств (Easy-Switch)',
+        'Подсветка': 'Интеллектуальная (датчики приближения рук и освещенности)',
+        'Зарядка': 'USB-C (до 5 месяцев без подсветки)'
+      },
+      sku: 'LOGI-MXKEYS-S-GRY',
+      tags: ['logitech', 'клавиатура', 'печать', 'bluetooth', 'умная подсветка'],
+      featured: true
+    }
+  },
+  {
+    id: 'accessory_apple_watch_9',
+    data: {
+      name: 'Apple Watch Series 9 GPS 45mm Midnight',
+      description: 'Умные часы Apple с новым мощным процессором S9 SiP, инновационным бесконтактным жестом двойного касания (Double Tap) и сверхъярким Always-On экраном.',
+      category: 'accessories',
+      subcategory: 'smartwatch',
+      price: 265000,
+      discountPrice: 249990,
       stock: 12,
       rating: 4.9,
-      reviews: 8,
-      images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80'],
+      reviews: 44,
+      images: ['https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80'],
       specifications: {
-        'Экран': '6.3" LTPO Super Retina XDR OLED, 120 Гц',
-        'Процессор': 'Apple A19 Pro (3-нм)',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': 'Тройная: 48 Мп + 48 Мп + 48 Мп с 5x оптическим зумом',
-        'Материал корпуса': 'Титановый сплав Grade 5',
-        'Разъем': 'USB-C (USB 3.2)'
+        'Дисплей': 'OLED LTPO Retina с яркостью до 2000 нит, Always-On',
+        'Процессор': 'Apple S9 SiP',
+        'Функции здоровья': 'ЭКГ, измерение кислорода в крови (SpO2), мониторинг сна, датчик температуры',
+        'Особая фишка': 'Жест двойного касания (Double Tap) указательного и большого пальцев',
+        'Время работы': 'До 18 часов (до 36 часов в режиме энергосбережения)'
       },
-      sku: 'AAPL-IP17P-256-GRY',
-      tags: ['apple', 'iphone', 'iphone 17', 'pro', 'смартфон'],
-      featured: false
+      sku: 'AAPL-WATCH9-45-MID',
+      tags: ['apple', 'watch', 'умные часы', 'double-tap', 'здоровье'],
+      featured: true
     }
   },
   {
-    id: 'iphone_17',
+    id: 'accessory_samsung_galaxy_watch_6',
     data: {
-      name: 'Apple iPhone 17 128GB',
-      description: 'Базовая модель линейки iPhone 17. Стильный дизайн, новый процессор A19, улучшенная двойная камера и увеличенное время автономной работы.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 590000,
-      discountPrice: 569990,
-      stock: 20,
-      rating: 4.8,
-      reviews: 14,
-      images: ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.1" Super Retina XDR OLED, 90 Гц',
-        'Процессор': 'Apple A19',
-        'Память': '128 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': 'Двойная: 48 Мп + 12 Мп',
-        'Материал корпуса': 'Авиационный алюминий, стекло',
-        'Разъем': 'USB-C'
-      },
-      sku: 'AAPL-IP17-128-BLU',
-      tags: ['apple', 'iphone', 'iphone 17', 'базовый'],
-      featured: false
-    }
-  },
-
-  // Линейка Apple iPhone 16
-  {
-    id: 'iphone_16_promax',
-    data: {
-      name: 'Apple iPhone 16 Pro Max 256GB',
-      description: 'Мощный флагман Apple с кнопкой Camera Control для мгновенного управления съемкой, процессором A18 Pro и увеличенным дисплеем 6.9 дюймов.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 760000,
-      discountPrice: 719990,
+      name: 'Samsung Galaxy Watch6 44mm Graphite',
+      description: 'Флагманские смарт-часы от Samsung на Wear OS. Тонкий безель, увеличенный экран, комплексный анализ состава тела (БИА) и мониторинг сна.',
+      category: 'accessories',
+      subcategory: 'smartwatch',
+      price: 185000,
+      discountPrice: 169990,
       stock: 18,
-      rating: 4.9,
-      reviews: 32,
-      images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.9" LTPO Super Retina XDR OLED, 120 Гц',
-        'Процессор': 'Apple A18 Pro',
-        'Память': '256 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': '48 Мп + 48 Мп (широкоугольная) + 12 Мп с 5x зумом',
-        'Физическая кнопка': 'Camera Control (сенсорная с отдачей)',
-        'Материал': 'Титан'
-      },
-      sku: 'AAPL-IP16PM-256-DESERT',
-      tags: ['apple', 'iphone', 'iphone 16', 'pro max', 'camera control'],
-      featured: true
-    }
-  },
-  {
-    id: 'iphone_16_pro',
-    data: {
-      name: 'Apple iPhone 16 Pro 256GB',
-      description: 'Премиум-класс в эргономичном формате. Дисплей 6.3 дюйма, титановый корпус, чип A18 Pro и выделенная кнопка для камеры Camera Control.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 680000,
-      stock: 15,
       rating: 4.8,
-      reviews: 24,
-      images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80'],
+      reviews: 29,
+      images: ['https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80'],
       specifications: {
-        'Экран': '6.3" LTPO Super Retina XDR OLED, 120 Гц',
-        'Процессор': 'Apple A18 Pro',
-        'Память': '256 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': '48 Мп + 48 Мп + 12 Мп с 5x зумом',
-        'Управление': 'Кнопка Action Button + Camera Control',
-        'Разъем': 'USB-C'
+        'Экран': '1.5" Super AMOLED, Sapphire Crystal',
+        'Процессор': 'Exynos W930 (5-нм)',
+        'Операционная система': 'Wear OS Powered by Samsung',
+        'Анализ тела': 'Биоимпедансный анализ (соотношение жира, воды и скелетных мышц)',
+        'Влагозащита': '5ATM / IP68 / MIL-STD-810H'
       },
-      sku: 'AAPL-IP16P-256-NAT',
-      tags: ['apple', 'iphone', 'iphone 16', 'pro'],
+      sku: 'SMSG-WATCH6-44-GRPH',
+      tags: ['samsung', 'galaxy-watch', 'wearos', 'фитнес', 'здоровье'],
       featured: false
     }
   },
   {
-    id: 'iphone_16',
+    id: 'accessory_xiaomi_smart_band_8',
     data: {
-      name: 'Apple iPhone 16 128GB',
-      description: 'Базовый iPhone 16 с обновленным вертикальным блоком камер для съемки пространственного видео, кнопкой Action Button и новым чипом A18.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 490000,
-      discountPrice: 469990,
-      stock: 25,
+      name: 'Фитнес-браслет Xiaomi Smart Band 8 Graphite Black',
+      description: 'Культовый фитнес-трекер в новом исполнении. Поддерживает частоту обновления экрана 60 Гц, быструю замену ремешков одной кнопкой и новые режимы бега.',
+      category: 'accessories',
+      subcategory: 'smartwatch',
+      price: 24000,
+      stock: 50,
       rating: 4.7,
-      reviews: 40,
-      images: ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'],
+      reviews: 230,
+      images: ['https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80'],
       specifications: {
-        'Экран': '6.1" Super Retina XDR OLED',
-        'Процессор': 'Apple A18',
-        'Память': '128 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': 'Двойная: 48 Мп + 12 Мп с поддержкой макросъемки',
-        'Особенности': 'Кнопка управления камерой, Action Button',
-        'Разъем': 'USB-C'
+        'Экран': '1.62" AMOLED, 60 Гц, автояркость до 600 нит',
+        'Время работы от аккумулятора': 'До 16 дней при обычном использовании (до 6 дней с Always-On)',
+        'Мониторинг': 'Пульс, сон, стресс, уровень кислорода в крови SpO2',
+        'Спортивные режимы': 'Более 150 режимов, включая интерактивный бокс и беговую клипсу'
       },
-      sku: 'AAPL-IP16-128-TEAL',
-      tags: ['apple', 'iphone', 'iphone 16', 'spatial video'],
-      featured: false
-    }
-  },
-
-  // Линейка Apple iPhone 15
-  {
-    id: 'iphone_15_promax',
-    data: {
-      name: 'Apple iPhone 15 Pro Max 256GB',
-      description: 'Легендарный первый титановый iPhone с чипом A17 Pro, 5-кратным оптическим зумом и переходом на универсальный разъем USB-C.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 650000,
-      discountPrice: 599990,
-      stock: 15,
-      rating: 4.9,
-      reviews: 112,
-      images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.7" Super Retina XDR OLED, 120 Гц',
-        'Процессор': 'Apple A17 Pro',
-        'Память': '256 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': '48 Мп + 12 Мп + 12 Мп с 5x зумом',
-        'Материал': 'Титановый сплав',
-        'Разъем': 'USB-C (USB 3.0)'
-      },
-      sku: 'AAPL-IP15PM-256-TI',
-      tags: ['apple', 'iphone', 'iphone 15', 'pro max', 'титан'],
-      featured: false
-    }
-  },
-  {
-    id: 'iphone_15_pro',
-    data: {
-      name: 'Apple iPhone 15 Pro 128GB',
-      description: 'Титановый флагман в компактном размере. Процессор A17 Pro позволяет запускать консольные игры прямо на смартфоне.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 570000,
-      stock: 22,
-      rating: 4.8,
-      reviews: 95,
-      images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.1" Super Retina XDR OLED, 120 Гц',
-        'Процессор': 'Apple A17 Pro',
-        'Память': '128 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': '48 Мп + 12 Мп + 12 Мп',
-        'Особенности': 'Кнопка Action Button',
-        'Разъем': 'USB-C'
-      },
-      sku: 'AAPL-IP15P-128-BLUE',
-      tags: ['apple', 'iphone', 'iphone 15', 'pro'],
-      featured: false
-    }
-  },
-  {
-    id: 'iphone_15',
-    data: {
-      name: 'Apple iPhone 15 128GB',
-      description: 'Базовый iPhone 15 с вырезом Dynamic Island, 48 Мп камерой сверхвысокого разрешения и матовым задним стеклом.',
-      category: 'smartphones',
-      subcategory: 'apple',
-      price: 430000,
-      discountPrice: 399990,
-      stock: 30,
-      rating: 4.7,
-      reviews: 154,
-      images: ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.1" Super Retina XDR OLED',
-        'Процессор': 'Apple A16 Bionic',
-        'Память': '128 ГБ',
-        'Оперативная память': '6 ГБ',
-        'Камера': 'Двойная: 48 Мп + 12 Мп',
-        'Интерфейс': 'Dynamic Island',
-        'Разъем': 'USB-C'
-      },
-      sku: 'AAPL-IP15-128-PINK',
-      tags: ['apple', 'iphone', 'iphone 15', 'dynamic island'],
-      featured: false
-    }
-  },
-
-  // Линейка Samsung Galaxy S26
-  {
-    id: 'samsung_s26_ultra',
-    data: {
-      name: 'Samsung Galaxy S26 Ultra 12/256GB',
-      description: 'Абсолютный лидер на Android. Невероятный процессор Snapdragon 8 Gen 5, обновленный Galaxy AI с продвинутым синхронным переводом голоса и полностью новая 200 Мп камера с оптикой Leica.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 870000,
-      discountPrice: 829990,
-      stock: 8,
-      rating: 5.0,
-      reviews: 3,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.8" Dynamic AMOLED 2X 144Hz',
-        'Процессор': 'Snapdragon 8 Gen 5 for Galaxy',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': 'Четыре модуля: 200 Мп + 50 Мп + 50 Мп + 12 Мп',
-        'Стилус': 'S Pen в корпусе',
-        'Функции ИИ': 'Galaxy AI v3.0 (автогенерация текстов, умный фотошоп)'
-      },
-      sku: 'SMSG-S26U-256-TITAN',
-      tags: ['samsung', 'galaxy', 's26', 'ultra', 'android', 'ai'],
-      featured: true
-    }
-  },
-  {
-    id: 'samsung_s26_plus',
-    data: {
-      name: 'Samsung Galaxy S26+ 12/256GB',
-      description: 'Сбалансированный флагман с большим экраном 6.7 дюйма, мощной батареей емкостью 4900 мАч и полным набором интеллектуальных функций Galaxy AI.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 690000,
-      stock: 10,
-      rating: 4.9,
-      reviews: 6,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.7" Dynamic AMOLED 2X 120Hz',
-        'Процессор': 'Exynos 2600 / Snapdragon 8 Gen 5',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': 'Тройная: 50 Мп + 12 Мп + 10 Мп',
-        'Батарея': '4900 мАч',
-        'Зарядка': '45 Вт быстрая зарядка'
-      },
-      sku: 'SMSG-S26P-256-SILVER',
-      tags: ['samsung', 'galaxy', 's26', 'plus', 'android'],
-      featured: false
-    }
-  },
-  {
-    id: 'samsung_s26',
-    data: {
-      name: 'Samsung Galaxy S26 8/256GB',
-      description: 'Компактный флагман Samsung Galaxy S26. Идеально ложится в руку, оснащен потрясающим Dynamic AMOLED экраном и новейшим процессором.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 570000,
-      discountPrice: 549990,
-      stock: 15,
-      rating: 4.8,
-      reviews: 9,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.2" Dynamic AMOLED 2X 120Hz',
-        'Процессор': 'Exynos 2600 / Snapdragon 8 Gen 5',
-        'Память': '256 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': 'Тройная: 50 Мп + 12 Мп + 10 Мп с 3x зумом',
-        'Влагозащита': 'IP68',
-        'Вес': '168 г'
-      },
-      sku: 'SMSG-S26-256-BLACK',
-      tags: ['samsung', 'galaxy', 's26', 'компактный'],
-      featured: false
-    }
-  },
-
-  // Линейка Samsung Galaxy S25
-  {
-    id: 'samsung_s25_ultra',
-    data: {
-      name: 'Samsung Galaxy S25 Ultra 12/256GB',
-      description: 'Флагман 2025 года с обтекаемым дизайном без острых углов, сверхтонкой титановой рамкой, топовым чипом Snapdragon 8 Gen 4 и ярким антибликовым экраном.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 740000,
-      discountPrice: 699990,
-      stock: 14,
-      rating: 4.9,
-      reviews: 45,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.8" Dynamic AMOLED 2X 120Hz Anti-reflective',
-        'Процессор': 'Snapdragon 8 Gen 4 for Galaxy',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': '200 Мп + 50 Мп + 50 Мп + 10 Мп с супер-стабилизацией',
-        'Стилус': 'S Pen в комплекте',
-        'Особенности': 'Антибликовое стекло Corning Gorilla Armor'
-      },
-      sku: 'SMSG-S25U-256-GRAY',
-      tags: ['samsung', 'galaxy', 's25', 'ultra', 'gorilla armor'],
-      featured: true
-    }
-  },
-  {
-    id: 'samsung_s25_plus',
-    data: {
-      name: 'Samsung Galaxy S25+ 12/256GB',
-      description: 'Стильный и производительный смартфон с увеличенным объемом оперативной памяти до 12 ГБ, ярким дисплеем и улучшенными алгоритмами ночной съемки Nightography.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 610000,
-      stock: 16,
-      rating: 4.8,
-      reviews: 31,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.7" Dynamic AMOLED 2X 120Hz',
-        'Процессор': 'Exynos 2500 / Snapdragon 8 Gen 4',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': 'Тройная: 50 Мп + 12 Мп + 10 Мп',
-        'Батарея': '4900 мАч',
-        'Толщина': '7.3 мм (ультратонкий)'
-      },
-      sku: 'SMSG-S25P-256-BLUE',
-      tags: ['samsung', 'galaxy', 's25', 'plus'],
-      featured: false
-    }
-  },
-  {
-    id: 'samsung_s25',
-    data: {
-      name: 'Samsung Galaxy S25 8/128GB',
-      description: 'Сверхкомпактный флагман 2025 года. Улучшенные портретные фото, высокая производительность в играх и поддержка функций искусственного интеллекта.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 490000,
-      discountPrice: 459990,
-      stock: 22,
-      rating: 4.7,
-      reviews: 38,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.2" Dynamic AMOLED 2X 120Hz',
-        'Процессор': 'Exynos 2500',
-        'Память': '128 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': 'Тройная: 50 Мп + 12 Мп + 10 Мп',
-        'Galaxy AI': 'Синхронный перевод, Circle to Search, генеративный редактор',
-        'Вес': '162 г'
-      },
-      sku: 'SMSG-S25-128-GREEN',
-      tags: ['samsung', 'galaxy', 's25', 'компактный'],
-      featured: false
-    }
-  },
-
-  // Линейка Samsung Galaxy S24
-  {
-    id: 'samsung_s24_ultra',
-    data: {
-      name: 'Samsung Galaxy S24 Ultra 12/256GB',
-      description: 'Первый флагман Samsung с титановой рамкой, плоским экраном и полноценной поддержкой ИИ функций Galaxy AI. Камера 200 Мп обеспечивает невероятную детализацию.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 580000,
-      discountPrice: 549990,
-      stock: 20,
-      rating: 4.8,
-      reviews: 98,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.8" Dynamic AMOLED 2X 120Hz',
-        'Процессор': 'Snapdragon 8 Gen 3 for Galaxy',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': '200 Мп + 50 Мп + 12 Мп + 10 Мп с 5x оптическим зумом',
-        'Стилус': 'S Pen в комплекте',
-        'Материал': 'Титан'
-      },
-      sku: 'SMSG-S24U-256-BLK',
-      tags: ['samsung', 'galaxy', 's24', 'ultra', 'титан'],
-      featured: false
-    }
-  },
-  {
-    id: 'samsung_s24_plus',
-    data: {
-      name: 'Samsung Galaxy S24+ 12/256GB',
-      description: 'Превосходный флагман с QHD+ экраном, 12 ГБ оперативной памяти и емкой батареей 4900 мАч. Поддерживает все функции Galaxy AI.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 490000,
-      discountPrice: 449990,
-      stock: 18,
-      rating: 4.7,
-      reviews: 64,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.7" Dynamic AMOLED 2X QHD+',
-        'Процессор': 'Exynos 2400',
-        'Память': '256 ГБ',
-        'Оперативная память': '12 ГБ',
-        'Камера': '50 Мп + 12 Мп + 10 Мп с 3x зумом',
-        'Батарея': '4900 мАч'
-      },
-      sku: 'SMSG-S24P-256-VIOLET',
-      tags: ['samsung', 'galaxy', 's24', 'plus'],
-      featured: false
-    }
-  },
-  {
-    id: 'samsung_s24',
-    data: {
-      name: 'Samsung Galaxy S24 8/128GB',
-      description: 'Базовая компактная модель линейки S24 с ярким экраном, тонкими симметричными рамками и продвинутым искусственным интеллектом.',
-      category: 'smartphones',
-      subcategory: 'samsung',
-      price: 390000,
-      discountPrice: 359990,
-      stock: 25,
-      rating: 4.6,
-      reviews: 82,
-      images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80'],
-      specifications: {
-        'Экран': '6.2" Dynamic AMOLED 2X FHD+',
-        'Процессор': 'Exynos 2400',
-        'Память': '128 ГБ',
-        'Оперативная память': '8 ГБ',
-        'Камера': 'Тройная: 50 Мп + 12 Мп + 10 Мп',
-        'Galaxy AI': 'Circle to Search, переводчик звонков, фото-помощник'
-      },
-      sku: 'SMSG-S24-128-AMBER',
-      tags: ['samsung', 'galaxy', 's24', 'компактный'],
+      sku: 'XMI-SBAND8-BLK',
+      tags: ['xiaomi', 'mi-band', 'браслет', 'спорт', 'автономность'],
       featured: false
     }
   }
